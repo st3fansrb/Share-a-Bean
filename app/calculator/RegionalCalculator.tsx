@@ -226,7 +226,7 @@ export default function RegionalCalculator() {
                 {" "}GAEC 7 is a condition for receiving payments, not a payment.
               </span>
             </div>
-            <p className="note">Payment rates are not published by Eurostat. Defaults are approximate planned unit amounts from national CAP Strategic Plans; edit them to match your paying agency.</p>
+            <p className="note">Payment rates are not published by Eurostat. Defaults are approximate planned unit amounts from national CAP Strategic Plans; edit them to match your paying agency.{cc === "FR" && " France: the coupled rates (about 104 and 150 €/ha) come from the team fact check of the 2022 plan; BISS and eco-scheme rates are not verified yet."}</p>
           </section>
 
           <details className="card rc-sec" open={!!st.openA} onToggle={(e) => { const o = (e.currentTarget as HTMLDetailsElement).open; if (o !== !!st.openA) set({ openA: o }); }}>

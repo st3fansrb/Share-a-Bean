@@ -46,7 +46,7 @@ export const CAP: Record<string, CapRates> = {
   AT: { biss: 210, cg: 0, cf: 0, eco: 0 }, BE: { biss: 160, cg: 100, cf: 100, eco: 50 }, BG: { biss: 107, cg: 140, cf: 90, eco: 40 },
   CY: { biss: 147, cg: 0, cf: 0, eco: 0 }, CZ: { biss: 150, cg: 150, cf: 0, eco: 0 }, DE: { biss: 156, cg: 0, cf: 0, eco: 45 },
   DK: { biss: 197, cg: 0, cf: 0, eco: 0 }, EE: { biss: 117, cg: 60, cf: 0, eco: 0 }, EL: { biss: 135, cg: 140, cf: 0, eco: 0 },
-  ES: { biss: 140, cg: 50, cf: 50, eco: 50 }, FI: { biss: 117, cg: 100, cf: 0, eco: 0 }, FR: { biss: 128, cg: 105, cf: 150, eco: 60 },
+  ES: { biss: 140, cg: 50, cf: 50, eco: 50 }, FI: { biss: 117, cg: 100, cf: 0, eco: 0 }, FR: { biss: 128, cg: 104, cf: 150, eco: 60 },
   HR: { biss: 133, cg: 130, cf: 100, eco: 30 }, HU: { biss: 140, cg: 140, cf: 80, eco: 40 }, IE: { biss: 175, cg: 350, cf: 0, eco: 0 },
   IT: { biss: 165, cg: 70, cf: 0, eco: 0 }, LT: { biss: 100, cg: 120, cf: 0, eco: 50 }, LU: { biss: 150, cg: 0, cf: 0, eco: 0 },
   LV: { biss: 95, cg: 100, cf: 0, eco: 30 }, MT: { biss: 200, cg: 0, cf: 0, eco: 0 }, NL: { biss: 210, cg: 0, cf: 0, eco: 0 },
