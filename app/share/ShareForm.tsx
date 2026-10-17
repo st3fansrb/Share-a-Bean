@@ -125,7 +125,7 @@ export default function ShareForm() {
                     toggle(p.id);
                     setCreatedShare(null);
                   }}
-                  style={{ accentColor: "var(--forest-1)" }}
+                  style={{ accentColor: "var(--forest)" }}
                 />
                 <span style={{ fontWeight: 600 }}>Field {p.id}:</span>
                 <span>{cropLabel(p.crop)}</span>
@@ -192,11 +192,11 @@ export default function ShareForm() {
             marginTop: 20,
             padding: 16,
             background: "var(--card-bg, #fff)",
-            border: "2px solid var(--forest-1)",
+            border: "2px solid var(--forest)",
             borderRadius: 8,
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, color: "var(--forest-1)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8, color: "var(--forest)" }}>
             <span style={{ fontSize: 18 }}>✓</span>
             <b style={{ fontSize: 15 }}>Shared</b>
           </div>
