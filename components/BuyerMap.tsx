@@ -1,12 +1,13 @@
 import { offerData, cropLabel } from "@/lib/data";
 
 // Schematic map, not geography: the farm in the centre, buyers placed by their distance.
-const RADIUS_KM = 70;
-const ANGLE: Record<string, number> = { o1: -35, o2: 200, o3: 115 };
+const RADIUS_KM = 85;
+const ANGLE: Record<string, number> = { o1: -35, o2: 200, o3: 115, o4: 150, o5: 20, o6: -80, o7: 245, o8: 70, o9: -150, o10: -10 };
 export const TYPE_COLOR: Record<string, string> = {
   "Food processor": "#2f6a49",
   "Feed company": "#3e6a8a",
   "Biogas plant": "#b8761f",
+  "Cooperative": "#7a4f8a",
 };
 
 export function BuyerMap() {

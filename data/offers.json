@@ -1,5 +1,5 @@
 {
-  "_note": "Synthetic buyer offers, modelled on spot, forward and cooperative contracts. Not real buyers.",
+  "_note": "Synthetic buyer offers, generated for the demo (not copied from the hackathon dataset, not real buyers). Modelled on spot, forward and cooperative contracts. The buyer role comes later.",
   "offers": [
     {
       "id": "o1",
@@ -85,6 +85,91 @@
       "contract": "Spot",
       "delivery": "Jul to Aug",
       "distanceKm": 75
+    },
+    {
+      "id": "o6",
+      "buyer": "Buyer F",
+      "type": "Food processor",
+      "crop": "pea",
+      "volumeT": [
+        600,
+        1500
+      ],
+      "priceEurT": [
+        245,
+        285
+      ],
+      "contract": "Forward",
+      "delivery": "Jul to Sep",
+      "distanceKm": 38
+    },
+    {
+      "id": "o7",
+      "buyer": "Buyer G",
+      "type": "Cooperative",
+      "crop": "lupin",
+      "volumeT": [
+        150,
+        600
+      ],
+      "priceEurT": [
+        350,
+        390
+      ],
+      "contract": "Cooperative",
+      "delivery": "Aug to Oct",
+      "distanceKm": 52
+    },
+    {
+      "id": "o8",
+      "buyer": "Buyer H",
+      "type": "Feed company",
+      "crop": "faba",
+      "volumeT": [
+        800,
+        2500
+      ],
+      "priceEurT": [
+        315,
+        345
+      ],
+      "contract": "Fixed or formula",
+      "delivery": "Aug to Nov",
+      "distanceKm": 68
+    },
+    {
+      "id": "o9",
+      "buyer": "Buyer I",
+      "type": "Biogas plant",
+      "crop": "faba",
+      "volumeT": [
+        250,
+        700
+      ],
+      "priceEurT": [
+        210,
+        250
+      ],
+      "contract": "Spot",
+      "delivery": "Jul to Aug",
+      "distanceKm": 25
+    },
+    {
+      "id": "o10",
+      "buyer": "Buyer J",
+      "type": "Food processor",
+      "crop": "lupin",
+      "volumeT": [
+        300,
+        1000
+      ],
+      "priceEurT": [
+        360,
+        410
+      ],
+      "contract": "Framework",
+      "delivery": "Aug to Oct",
+      "distanceKm": 80
     }
   ]
 }
