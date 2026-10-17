@@ -8,7 +8,7 @@ const display = Newsreader({ subsets: ["latin"], style: ["normal", "italic"], va
 const body = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-body" });
 
 export const metadata: Metadata = {
-  title: "share-a-byte",
+  title: "share-a-bean",
   description: "Find legume buyers, see if legumes pay off on your farm, and share only the data you choose.",
 };
 
