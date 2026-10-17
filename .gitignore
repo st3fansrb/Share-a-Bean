@@ -1,0 +1,16 @@
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+.env*
+!.env.example
+
+# Hackathon dataset: raw files must never be committed (ToS 10.3).
+# Only derived/aggregated extracts under data/derived/ are allowed.
+/raw/
+/hackathon-data/
+*.parquet
+*.duckdb
+*.duckdb.wal
+.DS_Store
