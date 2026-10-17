@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
+import { Newsreader, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "@/components/Sidebar";
+
+const display = Newsreader({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-display" });
+const body = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-body" });
 
 export const metadata: Metadata = {
   title: "share-a-byte",
@@ -9,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body>
         <div className="shell">
           <Sidebar />
