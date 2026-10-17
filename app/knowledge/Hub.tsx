@@ -89,7 +89,7 @@ export default function Hub() {
                 </button>
               );
             })}
-            <p className="note kh-side-note">You&rsquo;re matched with farms in {ZONE.name}. Names and locations are never shown. Conversations here are sample content.</p>
+            <p className="note kh-side-note">Farms in {ZONE.name}. Always anonymous.</p>
           </aside>
 
           <section className="kh-list">
@@ -160,7 +160,7 @@ export default function Hub() {
         <div className="kh-bench">
           <section className="card kh-form">
             <h2>Your season</h2>
-            <p className="muted">Your yield is compared with official French statistics and with other farms in {ZONE.name}. Individual entries are never shown. Zone results appear once {MIN_FARMS} or more farms have reported a crop.</p>
+            <p className="muted">Compare your yield with France and nearby farms.</p>
             <div className="kh-fields">
               <div><label>Crop</label><select value={b.crop} onChange={(e) => { setB({ ...b, crop: e.target.value }); setSubmitted(false); setErr(""); }}>{CROPS.map((cr) => <option key={cr.key} value={cr.key}>{cr.label}</option>)}</select></div>
               <div><label>Variety</label><input value={b.variety} onChange={upd("variety")} placeholder={`e.g. ${c.vars[0]}`} /></div>
@@ -215,7 +215,7 @@ export default function Hub() {
                     ))}
                   </div>
                   <div className="kh-axis">{hist.counts.map((_, i) => <span key={i}>{(hist.lo + i * 0.25).toFixed(2)}</span>)}</div>
-                  <p className="note">Farms per 0.25 t/ha band. Ochre marks your band. Dashed lines are published reference yields.</p>
+                  <p className="note">Ochre is you. Dashed lines are official yields.</p>
                 </div>
 
                 <div className="card">
@@ -244,7 +244,7 @@ export default function Hub() {
         <div className="kh-data">
           <div>
             <h2>Reference data</h2>
-            <p className="lede">Published French figures behind the benchmark. Yields from Agreste (French Ministry of Agriculture statistics) are national averages in q/ha, shown here in t/ha. 2025 figures are provisional.</p>
+            <p className="lede">Official French yields, t/ha.</p>
           </div>
           <div className="card rc-scroll">
             <table>
@@ -270,7 +270,7 @@ export default function Hub() {
               </div>
             ))}
           </div>
-          <p className="note">Zone distributions, discussion threads and farmer handles here are demo content. In production they would come from anonymous farmer submissions.</p>
+          <p className="note">Demo content.</p>
         </div>
       )}
     </div>

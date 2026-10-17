@@ -1,11 +1,10 @@
 import ShareForm from "./ShareForm";
-import { Synthetic } from "@/components/Tag";
 
 export default function Page() {
   return (
     <>
-      <h1>Your data, you decide <Synthetic /></h1>
-      <p className="lede">Choose what a buyer sees. Nothing is shared without your tick.</p>
+      <h1>Your data, your call</h1>
+      <p className="lede">Pick what one buyer can see. Nothing is shared without your tick.</p>
       <ShareForm />
     </>
   );

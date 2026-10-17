@@ -30,9 +30,9 @@ export default function ShareForm() {
       {farmParcels.map((p) => (
         <div key={p.id}><label><input type="checkbox" checked={parcels.includes(p.id)} onChange={() => toggle(p.id)} /> Parcel {p.id}: {cropLabel(p.crop)}, {p.area} ha</label></div>
       ))}
-      <p className="muted">Only the ticked parcels are shared, with this buyer only. You can see it afterwards under Contracts.</p>
+      <p className="muted">Only ticked parcels, only this buyer.</p>
       <button className="btn" disabled={!parcels.length} onClick={save}>Share</button>
-      {done && <p>Shared. Logged under Contracts.</p>}
+      {done && <p>Shared.</p>}
     </div>
   );
 }
