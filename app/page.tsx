@@ -44,7 +44,7 @@ export default function Home() {
         <dl className="ledger">
           <div><dt>Buyers within 60 km</dt><dd>{offerData.filter((o) => o.distanceKm <= 60).length}</dd><span>legume offers <Synthetic /></span></div>
           <div><dt>Faba bean vs wheat</dt><dd className="pos">+{eur(gap)} <small>€/ha</small></dd><span>incl. coupled support <Synthetic>placeholder</Synthetic></span></div>
-          <div><dt>Your farm</dt><dd>{area} <small>ha</small></dd><span>{farmData.parcels.length} parcels, no legumes yet</span></div>
+          <div><dt>Your farm</dt><dd>{area} <small>ha</small></dd><span>{farmData.parcels.length} parcels, {farmData.parcels.filter((p) => cropData[p.crop as Id].legume).length} with legumes</span></div>
         </dl>
       </section>
 

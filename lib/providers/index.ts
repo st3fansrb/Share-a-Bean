@@ -38,4 +38,4 @@ export const getOpportunities = (): Envelope<OpportunitiesData> =>
   ({ meta: synthetic, data: { offers: offers.offers as OpportunitiesData["offers"] } });
 
 export const getFarm = (): Envelope<FarmData> =>
-  ({ meta: synthetic, data: { name: farm.name, region: farm.region, parcels: farm.parcels as FarmData["parcels"] } });
+  ({ meta: synthetic, data: { name: farm.name, region: farm.region, parcels: farm.parcels as FarmData["parcels"], contracts: farm.contracts as FarmData["contracts"] } });
