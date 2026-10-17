@@ -1,15 +1,16 @@
-import { capSchemes } from "@/lib/data";
-import { Synthetic } from "@/components/Tag";
+import CapBenefits from "./CapBenefits";
+import { getCap } from "@/lib/providers";
+import { farmData, cropData, type CropId } from "@/lib/data";
 
 export default function Page() {
+  const cap = getCap().data;
+  const areaHa = farmData.parcels.reduce((a, p) => a + p.area, 0);
+  const legumeHa = farmData.parcels.filter((p) => cropData[p.crop as CropId]?.legume).reduce((a, p) => a + p.area, 0);
   return (
     <>
-      <h1>CAP support <Synthetic>rates to confirm</Synthetic></h1>
-      <p className="lede">Payments you can get for growing legumes.</p>
-      <div className="card"><table>
-        <thead><tr><th>Payment</th><th>€ per ha</th></tr></thead>
-        <tbody>{capSchemes.map((s) => <tr key={s.id}><td>{s.label}</td><td>{s.eurHa}</td></tr>)}</tbody>
-      </table></div>
+      <h1>CAP support</h1>
+      <p className="lede">What legumes can add to your CAP payments.</p>
+      <CapBenefits cap={cap} areaHa={areaHa} legumeHa={legumeHa || 10} points={3} />
     </>
   );
 }
