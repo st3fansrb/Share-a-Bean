@@ -20,7 +20,7 @@ export default function Opportunities() {
               <div><label>Contract</label>{o.contract}</div>
               <div><label>Delivery</label>{o.delivery}</div>
               <div style={{ flex: "0 0 auto" }}>
-                <Link className="btn" href={`/calculator?crop=${o.crop}&price=${Math.round((o.priceEurT[0] + o.priceEurT[1]) / 2)}`}>Does it pay for me?</Link>
+                <Link className="btn" href={`/calculator?offer=${o.id}&crop=${o.crop}&price=${Math.round((o.priceEurT[0] + o.priceEurT[1]) / 2)}`}>Does it pay for me?</Link>
               </div>
             </div>
           </div>

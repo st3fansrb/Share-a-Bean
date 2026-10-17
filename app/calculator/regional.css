@@ -76,3 +76,7 @@ details.rc-sec[open] > summary { margin-bottom: 12px; }
 
 @media (max-width: 1100px) { .rc-grid { grid-template-columns: minmax(0, 1fr); } .rc-map { position: relative; } }
 @media (max-width: 760px) { .rc-controls { grid-template-columns: 1fr; } .rc-kpis { grid-template-columns: 1fr; } .rc-kpis > div + div { border-left: 0; padding-left: 0; } .rc-hint { position: static; } }
+
+.rc-offer { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 10px 14px; border: 1px solid rgba(184, 118, 31, 0.4); background: var(--ochre-soft); border-radius: var(--radius); font-size: 14px; }
+.rc-offer span:nth-child(2) { flex: 1 1 280px; }
+.rc-offer .btn { padding: 4px 12px; }

@@ -63,7 +63,7 @@ export default function Home() {
           <ol className="offers">
             {offerData.map((o) => (
               <li key={o.id}>
-                <Link href={`/calculator?crop=${o.crop}&price=${Math.round((o.priceEurT[0] + o.priceEurT[1]) / 2)}`} style={{ borderLeftColor: TYPE_COLOR[o.type] }}>
+                <Link href={`/calculator?offer=${o.id}&crop=${o.crop}&price=${Math.round((o.priceEurT[0] + o.priceEurT[1]) / 2)}`} style={{ borderLeftColor: TYPE_COLOR[o.type] }}>
                   <span className="swatch" style={{ background: TYPE_COLOR[o.type] }} />
                   <div className="who">
                     <h3>{o.buyer} <span className="chip legume">{cropLabel(o.crop)}</span></h3>

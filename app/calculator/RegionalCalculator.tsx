@@ -34,12 +34,25 @@ const NO_DATA = "#e3dccb";
 const STORE = "sab-region-calc";
 const num = (v: string) => (v === "" ? undefined : +v);
 
-export default function RegionalCalculator() {
+export type Prefill = { crop: CropKey; price?: number; region?: string; label: string };
+
+export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
   const [st, setSt] = useState<CalcState & { openA?: boolean }>(initialState);
+  const [offer, setOffer] = useState(prefill);
   const [tip, setTip] = useState<{ x: number; y: number; id: string; name: string } | null>(null);
   useEffect(() => {
-    try { const s = localStorage.getItem(STORE); if (s) setSt((o) => ({ ...o, ...JSON.parse(s) })); } catch {}
-  }, []);
+    let saved: Partial<CalcState> = {};
+    try { const s = localStorage.getItem(STORE); if (s) saved = JSON.parse(s); } catch {}
+    // A link from an offer wins over the remembered state: show exactly that crop, region and price.
+    setSt((o) => {
+      const base = { ...o, ...saved };
+      if (!prefill) return base;
+      return {
+        ...base, leg: prefill.crop, region: prefill.region ?? base.region, metric: "adv",
+        rov: prefill.price != null ? { [`${prefill.crop}.p`]: prefill.price } : {},
+      };
+    });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const set = (patch: Partial<CalcState & { openA?: boolean }>) =>
     setSt((o) => { const n = { ...o, ...patch }; try { localStorage.setItem(STORE, JSON.stringify(n)); } catch {} return n; });
 
@@ -108,10 +121,17 @@ export default function RegionalCalculator() {
     </label>
   );
   const reset = () => set({ ov: {}, rov: {}, capOv: {}, cap: initialState.cap });
-  const pick = (id: string) => { if (D.regions[id]) set({ region: id, rov: {} }); };
+  const pick = (id: string) => { if (D.regions[id]) { setOffer(undefined); set({ region: id, rov: {} }); } };
 
   return (
     <div className="rc">
+      {offer && (
+        <div className="rc-offer">
+          <span className="chip legume">From an offer</span>
+          <span><b>{offer.label}</b>: {CROPS[offer.crop].label}{offer.price != null ? ` at €${offer.price}/t` : ""}, in {D.regions[st.region]?.n ?? st.region}. Change anything below.</span>
+          <button className="btn ghost" onClick={() => setOffer(undefined)}>Dismiss</button>
+        </div>
+      )}
       <div className="rc-controls card">
         <div>
           <label htmlFor="rc-leg">Legume</label>
