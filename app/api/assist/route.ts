@@ -20,25 +20,26 @@ function rulesOfferText(r: Ranked) {
   return `${r.offer.buyer} would pay roughly ${Math.round(r.netPriceEurT)} €/t after transport, ${cmp}. ${r.cautions[0] ?? ""}`.trim();
 }
 
-async function askClaude(prompt: string): Promise<string | null> {
-  const key = process.env.ANTHROPIC_API_KEY;
+// Free-tier Gemini (Google AI Studio key). Returns null on any problem so the built-in text is used.
+async function askModel(prompt: string): Promise<string | null> {
+  const key = process.env.GEMINI_API_KEY;
   if (!key) return null;
+  const model = process.env.GEMINI_MODEL ?? "gemini-2.5-flash";
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
       method: "POST",
-      headers: { "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+      headers: { "x-goog-api-key": key, "content-type": "application/json" },
       body: JSON.stringify({
-        model: process.env.ANTHROPIC_MODEL ?? "claude-haiku-5-5",
-        max_tokens: 250,
-        system: SYSTEM_PROMPT,
-        messages: [{ role: "user", content: prompt }],
+        systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+        contents: [{ role: "user", parts: [{ text: prompt }] }],
+        generationConfig: { maxOutputTokens: 120, temperature: 0.3, thinkingConfig: { thinkingBudget: 0 } },
       }),
-      signal: AbortSignal.timeout(12000),
+      signal: AbortSignal.timeout(10000),
     });
     if (!res.ok) return null;
     const j = await res.json();
-    const t = j.content?.find((c: { type: string }) => c.type === "text")?.text;
-    return typeof t === "string" ? t.trim() : null;
+    const t = j.candidates?.[0]?.content?.parts?.map((p: { text?: string }) => p.text ?? "").join("");
+    return typeof t === "string" && t.trim() ? t.trim() : null;
   } catch {
     return null;
   }
@@ -71,6 +72,6 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: "bad kind" }, { status: 400 });
   }
 
-  const ai = await askClaude(`${facts}\n\n${task}`);
+  const ai = await askModel(`${facts}\n\n${task}`);
   return Response.json(ai ? { text: ai, source: "ai" } : { text: fallback, source: "rules" });
 }

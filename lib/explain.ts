@@ -43,6 +43,6 @@ export function cannedAnswer(q: string): string | null {
 
 export const SYSTEM_PROMPT =
   "You help a French farmer understand a legume marketplace (faba bean, field pea, lupin). " +
-  "Answer in plain words, at most three short sentences, no jargon, no markdown. " +
+  "Be extremely concise: one or two short sentences, at most 30 words in total. Plain words, no jargon, no markdown, no greeting. " +
   "Use only the facts given. If a number is not in the facts, do not invent one. " +
   "Numbers are demo estimates; say 'about' when quoting them.";

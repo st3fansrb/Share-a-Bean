@@ -1,7 +1,7 @@
 # Declarations
 
 - Third-party libraries: next, react, react-dom, typescript, vitest, d3-geo, topojson-client (all open source).
-- AI: offers are ranked by plain rules in `lib/advisor.ts` (margin per ha with CAP and nitrogen credit, minus a rough haulage cost; placeholder numbers). The Claude API (`claude-haiku-5-5`, `app/api/assist`) only rewords numbers the server computed into short plain language, and only when `ANTHROPIC_API_KEY` is set; without it the app shows built-in text. The model never sees raw dataset rows.
+- AI: offers are ranked by plain rules in `lib/advisor.ts` (margin per ha with CAP and nitrogen credit, minus a rough haulage cost; placeholder numbers). A free-tier Google Gemini model (`gemini-2.5-flash` via Google AI Studio, `app/api/assist`) only rewords numbers the server computed into short plain language, and only when `GEMINI_API_KEY` is set; without it the app shows built-in text. The model never sees raw dataset rows.
 - Data: synthetic demo data in `data/`. Crop and cost numbers are placeholders. No hackathon raw data is in this repo.
 - Datasets used: DG AGRI hackathon synthetic sales (`synthetic_transaction_sale`), aggregates only (contract-type mix, lot-size percentiles); no rows are in this repo.
 - Public sources for the simulated buyers: [FranceAgriMer, Fiche filière protéagineux 2026](https://www.franceagrimer.fr/sites/default/files/2026-02/19_FICHE_FILIERE_PROTEAGINEUX_2026.pdf) (collector mix, outlets, export, July to June campaign). Price bands in `data/offers.json` are indicative guesses, not sourced quotes: replace them with a sourced series before the pitch.
