@@ -33,6 +33,8 @@ export type CropAssumption = {
   yieldTHa: number;
   priceEurT: number;
   costEurHa: number;
+  /** Set when yieldTHa comes from a cited source; otherwise it is a placeholder. */
+  yieldSource?: string;
 };
 export type CalculatorData = {
   crops: CropAssumption[];

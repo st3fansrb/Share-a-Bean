@@ -11,3 +11,4 @@
 - Buyers in `data/offers.json` are simulated; there is no buyer verification. Sharing is a browser-only demo (localStorage): no data leaves the device and nothing is signed.
 - Parcel CSV import follows the shape of an IACS / RPG export; the demo farm is not real data.
 - Eco-scheme and basic-payment rates in `data/cap.json` (basic payment 128 €/ha, eco-scheme 45.46 / 62.05 €/ha) are provisional and unconfirmed; the coupled protein rate is 104 €/ha (fact check).
+- Public data: legume yields in `data/crops.json` (faba bean 2.40, field pea 2.94, lupin 2.17 t/ha) are the FAOSTAT France national yield, official values (flag A), mean 2020-2024; the derived figures are in `data/faostat.json` and the raw FAOSTAT download is not in this repo. Prices and costs there are still placeholders.

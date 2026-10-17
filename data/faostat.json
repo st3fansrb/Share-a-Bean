@@ -1,0 +1,40 @@
+{
+  "_note": "Derived from FAOSTAT crops and livestock products (QCL), France national, yield, official values (flag A). Only the derived 2020-2024 figures are stored, not the raw file.",
+  "source": "FAOSTAT, France, yield, 2020-2024",
+  "unit": "t/ha",
+  "crops": {
+    "faba": {
+      "faostatItem": "Broad beans and horse beans, dry",
+      "byYear": {
+        "2020": 1.93,
+        "2021": 2.36,
+        "2022": 2.32,
+        "2023": 2.7,
+        "2024": 2.69
+      },
+      "mean2020_2024": 2.4
+    },
+    "lupin": {
+      "faostatItem": "Lupins",
+      "byYear": {
+        "2020": 2.2,
+        "2021": 2.26,
+        "2022": 2.08,
+        "2023": 2.2,
+        "2024": 2.12
+      },
+      "mean2020_2024": 2.17
+    },
+    "pea": {
+      "faostatItem": "Peas, dry",
+      "byYear": {
+        "2020": 2.76,
+        "2021": 2.84,
+        "2022": 3.0,
+        "2023": 3.2,
+        "2024": 2.92
+      },
+      "mean2020_2024": 2.94
+    }
+  }
+}
