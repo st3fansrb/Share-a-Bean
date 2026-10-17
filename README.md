@@ -1,6 +1,6 @@
 # share-a-bean
 
-Working name: share-a-byte. A farmer-facing tool that connects legume growers with buyers, shows whether growing legumes pays off on their farm, and lets the farmer choose which data goes to which buyer.
+Working name: Share-a-Bean. A farmer-facing tool that connects legume growers with buyers, shows whether growing legumes pays off on their farm, and lets the farmer choose which data goes to which buyer.
 
 Status: early draft. See `docs/` once added.
 
