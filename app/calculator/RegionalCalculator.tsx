@@ -4,6 +4,9 @@ import { geoAzimuthalEqualArea, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
 import topoRaw from "@/data/eurostat/nuts2.topo.json";
+import Link from "next/link";
+import { useParcels } from "@/lib/useParcels";
+import { cropLabel } from "@/lib/data";
 import {
   CAP, CNAME, COMPS, CROPS, D, LEGS, calc, capOf, eur, fmt, initialState, legumeArea, nP, sgn, val,
   type CalcState, type CropKey, type Field,
@@ -34,12 +37,18 @@ const NO_DATA = "#e3dccb";
 const STORE = "sab-region-calc";
 const num = (v: string) => (v === "" ? undefined : +v);
 
-export type Prefill = { crop: CropKey; price?: number; region?: string; label: string };
+export type Prefill = { crop: CropKey; price?: number; region?: string; label: string; offerId?: string };
 
 export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
   const [st, setSt] = useState<CalcState & { openA?: boolean }>(initialState);
   const [offer, setOffer] = useState(prefill);
+  const [scope, setScope] = useState<"FR" | "EU">("FR");
+  const { parcels: farmParcels } = useParcels();
+  const [selectedParcelId, setSelectedParcelId] = useState<string>("B");
   const [tip, setTip] = useState<{ x: number; y: number; id: string; name: string } | null>(null);
+
+  const selectedParcel = farmParcels.find((p) => p.id === selectedParcelId) ?? farmParcels[0];
+
   useEffect(() => {
     let saved: Partial<CalcState> = {};
     try { const s = localStorage.getItem(STORE); if (s) saved = JSON.parse(s); } catch {}
@@ -67,6 +76,7 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
   }, [st.leg, st.comp, st.metric, st.ov, st.cap, st.capOv]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const colour = (id: string) => {
+    if (scope === "FR" && !id.startsWith("FR")) return "#ece8df";
     const v = metricVals[id];
     if (v == null) return NO_DATA;
     if (st.metric === "area") return v <= 0 ? NO_DATA : ramp(AREA, Math.min(1, Math.log10(v) / 5));
@@ -128,7 +138,8 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
       {offer && (
         <div className="rc-offer">
           <span className="chip legume">From an offer</span>
-          <span><b>{offer.label}</b>: {CROPS[offer.crop].label}{offer.price != null ? ` at €${offer.price}/t` : ""}, in {D.regions[st.region]?.n ?? st.region}. Change anything below.</span>
+          <span><b>{offer.label}</b>: {CROPS[offer.crop].label}{offer.price != null ? ` at €${offer.price}/t` : ""}. About <b>{sgn(res.adv)}/ha</b> over 3 years.</span>
+          <Link href={`/share?offer=${offer.offerId ?? "o1"}`} className="btn">Share fields →</Link>
           <button className="btn ghost" onClick={() => setOffer(undefined)}>Dismiss</button>
         </div>
       )}
@@ -148,9 +159,16 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
           </div>
         </div>
         <div>
-          <label>Map</label>
+          <label>Scope</label>
+          <div className="seg" role="radiogroup" aria-label="Map scope">
+            <button role="radio" aria-checked={scope === "FR"} className={scope === "FR" ? "on" : ""} onClick={() => { setScope("FR"); set({ region: "FRB0" }); }}>France</button>
+            <button role="radio" aria-checked={scope === "EU"} className={scope === "EU" ? "on" : ""} onClick={() => setScope("EU")}>All Europe</button>
+          </div>
+        </div>
+        <div>
+          <label>Metric</label>
           <div className="seg" role="radiogroup" aria-label="Map shows">
-            {([["adv", "Gain over 3 years"], ["y1", "Gain this year"], ["area", "Where it grows"]] as const).map(([k, t]) => (
+            {([["adv", "3-yr gain"], ["y1", "Year 1"], ["area", "Area"]] as const).map(([k, t]) => (
               <button key={k} role="radio" aria-checked={st.metric === k} className={st.metric === k ? "on" : ""} onClick={() => set({ metric: k })}>{t}</button>
             ))}
           </div>
@@ -159,13 +177,16 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
 
       <div className="rc-grid">
         <div className="card rc-map" onMouseLeave={() => setTip(null)}>
-          <p className="note rc-hint">Tap a region. Green means the legume earns more.</p>
+          <p className="note rc-hint">{scope === "FR" ? "France regions focused. Tap a region to view." : "Tap an EU region. Green means legume earns more."}</p>
           <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="EU NUTS 2 regions coloured by legume margin advantage">
-            {paths.filter((p) => p.id !== rid).map((p) => (
-              <path key={p.id} d={p.d} className="reg" fill={colour(p.id)}
-                onClick={() => pick(p.id)}
-                onMouseMove={(e) => { const b = e.currentTarget.ownerSVGElement!.getBoundingClientRect(); setTip({ x: e.clientX - b.left, y: e.clientY - b.top, id: p.id, name: p.name }); }} />
-            ))}
+            {paths.filter((p) => p.id !== rid).map((p) => {
+              const isDimmed = scope === "FR" && !p.id.startsWith("FR");
+              return (
+                <path key={p.id} d={p.d} className="reg" fill={colour(p.id)} opacity={isDimmed ? 0.3 : 1}
+                  onClick={() => pick(p.id)}
+                  onMouseMove={(e) => { const b = e.currentTarget.ownerSVGElement!.getBoundingClientRect(); setTip({ x: e.clientX - b.left, y: e.clientY - b.top, id: p.id, name: p.name }); }} />
+              );
+            })}
             {selected && <path d={selected.d} className="reg sel" fill={colour(rid)} />}
           </svg>
           {tip && <div className="rc-tip" style={{ left: Math.min(tip.x + 14, 420), top: tip.y + 14 }}><b>{tip.name}</b> · {tip.id}<br />{tipText(tip.id)}</div>}
@@ -194,6 +215,44 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
               </div>
             </div>
           </section>
+
+          {/* Farm-Level Conversion Widget */}
+          {selectedParcel && (
+            <section className="card rc-sec" style={{ borderLeft: "4px solid var(--forest-1, #1e4a32)" }}>
+              <p className="eyebrow">Farm-Level Conversion</p>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
+                <h3 style={{ margin: 0, fontSize: 16 }}>Impact on Field {selectedParcel.id}</h3>
+                <select
+                  value={selectedParcelId}
+                  onChange={(e) => setSelectedParcelId(e.target.value)}
+                  style={{ fontSize: 12, padding: "3px 8px", borderRadius: 6, border: "1px solid var(--line)" }}
+                >
+                  {farmParcels.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      Field {p.id} ({p.area} ha · {cropLabel(p.crop)})
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <p style={{ fontSize: 13, color: "var(--text-soft)", margin: "0 0 10px 0" }}>
+                Converting Field {selectedParcel.id} ({selectedParcel.area} ha) from {cropLabel(selectedParcel.crop)} to {L.label}:
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, background: "var(--line-soft)", padding: 10, borderRadius: 8 }}>
+                <div>
+                  <small style={{ fontSize: 11, color: "var(--text-soft)" }}>Total 3-yr Upside</small>
+                  <div style={{ fontSize: 18, fontWeight: 700 }} className={win ? "pos" : "neg"}>
+                    {sgn(Math.round(selectedParcel.area * res.adv))}
+                  </div>
+                </div>
+                <div>
+                  <small style={{ fontSize: 11, color: "var(--text-soft)" }}>Coupled Protein Aid</small>
+                  <div style={{ fontSize: 18, fontWeight: 700, color: "var(--forest-1)" }}>
+                    +{eur(Math.round(selectedParcel.area * (L.forage ? cap.cf : cap.cg)))}
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
 
           <section className="card rc-sec">
             <p className="eyebrow">Where the gain comes from</p>

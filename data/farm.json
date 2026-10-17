@@ -6,32 +6,38 @@
     {
       "id": "A",
       "crop": "wheat",
-      "area": 12.0
+      "area": 12.0,
+      "ecoScheme": "Basic payment"
     },
     {
       "id": "B",
       "crop": "rapeseed",
-      "area": 8.5
+      "area": 8.5,
+      "ecoScheme": "Eco-scheme level 1"
     },
     {
       "id": "C",
       "crop": "sunflower",
-      "area": 6.0
+      "area": 6.0,
+      "ecoScheme": "Basic payment"
     },
     {
       "id": "D",
       "crop": "wheat",
-      "area": 9.5
+      "area": 9.5,
+      "ecoScheme": "Basic payment"
     },
     {
       "id": "E",
       "crop": "faba",
-      "area": 7.5
+      "area": 7.5,
+      "ecoScheme": "Protein aid + eco-scheme level 2"
     },
     {
       "id": "F",
       "crop": "pea",
-      "area": 5.0
+      "area": 5.0,
+      "ecoScheme": "Protein aid + eco-scheme level 2"
     }
   ],
   "contracts": [

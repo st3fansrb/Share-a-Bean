@@ -87,7 +87,23 @@ export type Offer = {
 export type OpportunitiesData = { offers: Offer[] };
 
 // Owner: Stefan. GET /api/farm (My Farm and Contracts are one tab)
-export type Parcel = { id: string; crop: CropId; area: number };
+export type Parcel = { id: string; crop: CropId; area: number; ecoScheme?: string };
+
+export type ShareRecord = {
+  id: string;
+  at: string;
+  offerId: string;
+  buyer: string;
+  crop: CropId;
+  parcels: string[];
+  disclosedFields: {
+    area: boolean;
+    crop: boolean;
+    ecoScheme: boolean;
+    yieldEstimate?: boolean;
+  };
+  active: boolean;
+};
 /** A contract the farmer is fulfilling with a buyer from Opportunities (offerId matches Offer.id). Tracking only: status, committed vs delivered, delivery window. */
 export type FarmContract = {
   id: string;
