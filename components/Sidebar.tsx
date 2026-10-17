@@ -9,7 +9,7 @@ const items = [
   { href: "/opportunities", label: "Buyers", icon: icons.opportunities },
   { href: "/calculator", label: "Calculator", icon: icons.calculator },
   { href: "/cap", label: "CAP support", icon: icons.cap },
-  { href: "/insights", label: "Yields", icon: icons.insights },
+  { href: "/insights", label: "Market insights", icon: icons.insights },
   { href: "/knowledge", label: "Farmer advice", icon: icons.knowledge },
 ];
 

@@ -50,7 +50,15 @@ export type CapScheme = {
   appliesTo: "legume" | "fodder-legume" | "all";
   source: string;
 };
-export type CapData = { country: "FR"; schemes: CapScheme[] };
+export type EcoScheme = {
+  baseEurHa: number; higherEurHa: number;
+  basePts: number; higherPts: number; maxPts: number;
+  /** Points a legume share earns: at least 10% of arable land, or at least 5%. */
+  legumePtsAt10Pct: number; legumePtsAt5Pct: number;
+  source: string;
+};
+export type CapRule = { id: string; label: string; note: string };
+export type CapData = { country: "FR"; schemes: CapScheme[]; ecoScheme: EcoScheme; rules: CapRule[] };
 
 // Owner: Alexander. GET /api/insights
 export type CropPerformance = {

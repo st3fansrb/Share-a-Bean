@@ -1,7 +1,41 @@
 {
-  "_note": "Hand-curated CAP support table. Only values given by the team are filled in. Add the source link per row.",
+  "_note": "Hand-curated CAP support table. Coupled rates match the France fact check (/fact-check). Eco-scheme 2026 values are from Alexander's design (provisional, to confirm with TelePAC 2026).",
   "schemes": [
-    { "id": "coupled-protein", "label": "Coupled support, protein crops", "eurHa": 104, "appliesTo": "legume", "source": "TO ADD (CAP Strategic Plan, France)" },
-    { "id": "coupled-fodder-legume", "label": "Coupled support, fodder legumes", "eurHa": 150, "appliesTo": "fodder-legume", "source": "TO ADD (CAP Strategic Plan, France)" }
+    {
+      "id": "coupled-protein",
+      "label": "Coupled support, protein crops",
+      "eurHa": 104,
+      "appliesTo": "legume",
+      "source": "TO ADD (CAP Strategic Plan, France)"
+    },
+    {
+      "id": "coupled-fodder-legume",
+      "label": "Coupled support, fodder legumes",
+      "eurHa": 150,
+      "appliesTo": "fodder-legume",
+      "source": "TO ADD (CAP Strategic Plan, France)"
+    }
+  ],
+  "ecoScheme": {
+    "baseEurHa": 45.46,
+    "higherEurHa": 62.05,
+    "basePts": 4,
+    "higherPts": 5,
+    "maxPts": 7,
+    "legumePtsAt10Pct": 3,
+    "legumePtsAt5Pct": 2,
+    "source": "TO ADD (TelePAC 2026, provisional)"
+  },
+  "rules": [
+    {
+      "id": "maec",
+      "label": "Regional agri-environment contracts (MAEC)",
+      "note": "Varies by region. No double funding with the eco-scheme."
+    },
+    {
+      "id": "bcae7",
+      "label": "Crop rotation rule (BCAE 7)",
+      "note": "A legume counts as a crop change."
+    }
   ]
 }
