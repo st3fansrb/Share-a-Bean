@@ -1,0 +1,7 @@
+{
+  "_note": "PLACEHOLDER articles. Alexa replaces with real guidance.",
+  "articles": [
+    { "id": "why-legumes", "title": "Why grow legumes", "summary": "Nitrogen credit, a break in the cereal rotation, EU protein goals.", "body": "Placeholder text.", "tags": ["rotation", "nitrogen"] },
+    { "id": "first-contract", "title": "Reading a first contract", "summary": "Spot, forward and cooperative contracts in plain words.", "body": "Placeholder text.", "tags": ["contracts"] }
+  ]
+}
