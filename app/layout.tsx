@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Newsreader, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "@/components/Sidebar";
+import { Assistant } from "@/components/Assistant";
 
 const display = Newsreader({ subsets: ["latin"], style: ["normal", "italic"], variable: "--font-display" });
 const body = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-body" });
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Sidebar />
           <main className="main">{children}</main>
         </div>
+        <Assistant />
       </body>
     </html>
   );
