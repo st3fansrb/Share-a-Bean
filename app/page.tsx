@@ -12,16 +12,6 @@ const support = (id: Id) => (cropData[id].legume ? coupled : 0);
 const margin = (id: Id) => marginPerHa({ ...cropData[id], supportEurHa: support(id) });
 const eur = (n: number) => Math.round(n).toLocaleString("en-GB");
 
-const compare = (["wheat", "rapeseed", "faba", "lupin"] as const).map((id) => {
-  const c = cropData[id];
-  return { id, label: cropLabel(id), legume: c.legume, margin: Math.round(marginPerHa({ ...c, supportEurHa: 0 })) };
-});
-const top = Math.max(...compare.map((c) => c.margin));
-const nCredit = nitrogen.creditKgHa * nitrogen.eurKg;
-const area = farmData.parcels.reduce((s, p) => s + p.area, 0);
-
-const fmt = (n: number) => n.toLocaleString("en-GB");
-
 export default function Home() {
   const area = farmData.parcels.reduce((s, p) => s + p.area, 0);
   const ids = Object.keys(cropData) as Id[];
