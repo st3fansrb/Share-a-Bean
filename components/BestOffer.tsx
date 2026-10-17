@@ -11,16 +11,16 @@ export function BestOffer() {
   const gain = Math.round(best.gainEurHa);
   return (
     <div className="card best" style={{ marginBottom: 16 }}>
-      <div className="eyebrow">Best match for your farm</div>
+      <div className="eyebrow">Best buyer for you</div>
       <h2>{o.buyer}: {cropLabel(o.crop)}, {o.contract.toLowerCase()} contract</h2>
-      <div className="gain">{gain >= 0 ? "+" : ""}{gain} €/ha <span className="muted" style={{ fontSize: 14 }}>vs. what you grow now (estimate)</span></div>
+      <div className="gain">{gain >= 0 ? "+" : ""}{gain} €/ha <span className="muted" style={{ fontSize: 14 }}>vs. your crops now</span></div>
       <ul>
-        {[...best.reasons, ...best.cautions].map((r) => <li key={r}>{r}</li>)}
+        {[best.reasons[0], best.cautions[0]].filter(Boolean).map((r) => r as string).map((r) => <li key={r}>{r}</li>)}
       </ul>
       <div className="actions">
-        <Link className="btn" href={`/calculator?offer=${o.id}&crop=${o.crop}&price=${Math.round(best.netPriceEurT)}`}>Check it in the calculator</Link>
+        <Link className="btn" href={`/calculator?offer=${o.id}&crop=${o.crop}&price=${Math.round(best.netPriceEurT)}`}>What would I earn?</Link>
       </div>
-      <ExplainOffer offerId={o.id} label="Explain in simple words" />
+      <ExplainOffer offerId={o.id} label="Explain" />
     </div>
   );
 }

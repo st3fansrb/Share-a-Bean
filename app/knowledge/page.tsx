@@ -5,8 +5,8 @@ import "./knowledge.css";
 export default function Page() {
   return (
     <>
-      <h1>Knowledge Hub <Synthetic>sample discussions</Synthetic></h1>
-      <p className="lede">Ask farms like yours, and compare your season with published French yields. Yield figures are sourced; zone entries and threads are demo content.</p>
+      <h1>Farmer advice <Synthetic>demo content</Synthetic></h1>
+      <p className="lede">Ask nearby farms and compare your yield.</p>
       <Hub />
     </>
   );

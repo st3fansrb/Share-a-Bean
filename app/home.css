@@ -25,7 +25,7 @@
 
 .offers { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 .offers li + li { border-top: 1px solid var(--line-soft); }
-.offers a { display: grid; grid-template-columns: 4px minmax(150px, 1.4fr) repeat(4, minmax(0, 1fr)) 20px; gap: 14px; align-items: center; padding: 16px 8px 16px 0; text-decoration: none; border-radius: 10px; transition: background 0.15s; }
+.offers a { display: grid; grid-template-columns: 4px minmax(150px, 1.4fr) repeat(3, minmax(0, 1fr)) 20px; gap: 14px; align-items: center; padding: 16px 8px 16px 0; text-decoration: none; border-radius: 10px; transition: background 0.15s; }
 .offers a:hover { background: rgba(30, 74, 50, 0.04); }
 .offers a:hover .go { transform: translateX(3px); color: var(--forest); }
 .swatch { width: 4px; height: 40px; border-radius: 4px; }
@@ -35,7 +35,7 @@
 .fact span { display: block; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 2px; }
 .go { color: var(--muted); transition: transform 0.2s, color 0.2s; }
 
-.trio { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 16px; }
+.trio { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; }
 .trio .card { display: flex; flex-direction: column; }
 .trio .link { margin-top: auto; padding-top: 14px; }
 

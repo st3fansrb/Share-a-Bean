@@ -9,7 +9,7 @@ Each tab has one typed contract in `lib/contracts.ts` and one JSON endpoint unde
 | CAP Benefits | Alexander | Alexander | `/api/cap` | `CapData` |
 | Market Insights | Alexander | Maritina (extract) | `/api/insights` | `InsightsData` |
 | Opportunities | Stefan | Stefan (simulated buyers) | `/api/opportunities` | `OpportunitiesData` |
-| My Farm / Contracts | Stefan | Stefan | `/api/farm` | `FarmData` |
+| My Farm & Contracts (one tab) | Stefan | Stefan | `/api/farm` | `FarmData` (parcels + contracts) |
 
 ## Rules
 

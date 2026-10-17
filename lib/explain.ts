@@ -7,8 +7,7 @@ export const pageExplainers: { prefix: string; text: string }[] = [
   { prefix: "/cap", text: "Extra EU money you can get for growing legumes. It is paid per hectare, on top of what you sell the crop for." },
   { prefix: "/insights", text: "How legumes and other crops did in your region in past years, so you can see if they suit your area." },
   { prefix: "/knowledge", text: "Short guides and yield figures on growing legumes, plus questions from other farmers." },
-  { prefix: "/farm", text: "Your fields and what you grow on them. Everything else in the app starts from this." },
-  { prefix: "/contracts", text: "Your running contracts with buyers, in one place." },
+  { prefix: "/farm", text: "Your fields and your running contracts. Everything else starts from this." },
   { prefix: "/share", text: "You choose which fields and crops a buyer can see. You can switch it off at any time. Nothing else leaves your farm." },
   { prefix: "/", text: "Share-a-Bean helps you find buyers for faba bean, pea and lupin, check if they pay on your farm, and share only the data you choose." },
 ];

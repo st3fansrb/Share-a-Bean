@@ -78,6 +78,23 @@ export type Offer = {
 };
 export type OpportunitiesData = { offers: Offer[] };
 
-// Owner: Stefan. GET /api/farm
+// Owner: Stefan. GET /api/farm (My Farm and Contracts are one tab)
 export type Parcel = { id: string; crop: CropId; area: number };
-export type FarmData = { name: string; region: string; parcels: Parcel[] };
+/** A contract the farmer is fulfilling with a buyer from Opportunities (offerId matches Offer.id). Tracking only: status, committed vs delivered, delivery window. */
+export type FarmContract = {
+  id: string;
+  offerId: string;
+  buyer: string;
+  crop: CropId;
+  contract: Offer["contract"];
+  /** Harvest year the volume comes from. */
+  harvest: number;
+  status: "upcoming" | "delivering" | "fulfilled";
+  committedT: number;
+  deliveredT: number;
+  priceEurT: number;
+  /** ISO dates, inclusive. */
+  windowStart: string;
+  windowEnd: string;
+};
+export type FarmData = { name: string; region: string; parcels: Parcel[]; contracts: FarmContract[] };

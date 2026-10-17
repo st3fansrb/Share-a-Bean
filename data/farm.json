@@ -1,11 +1,81 @@
 {
-  "_note": "Synthetic demo farm. Not real data.",
+  "_note": "Synthetic demo farm and contracts. Not real data. Contract buyers/offers are the simulated ones in offers.json.",
   "name": "Demo farm, Centre-Val de Loire",
   "region": "Centre-Val de Loire",
   "parcels": [
-    { "id": "A", "crop": "wheat", "area": 12.0 },
-    { "id": "B", "crop": "rapeseed", "area": 8.5 },
-    { "id": "C", "crop": "sunflower", "area": 6.0 },
-    { "id": "D", "crop": "wheat", "area": 9.5 }
+    {
+      "id": "A",
+      "crop": "wheat",
+      "area": 12.0
+    },
+    {
+      "id": "B",
+      "crop": "rapeseed",
+      "area": 8.5
+    },
+    {
+      "id": "C",
+      "crop": "sunflower",
+      "area": 6.0
+    },
+    {
+      "id": "D",
+      "crop": "wheat",
+      "area": 9.5
+    },
+    {
+      "id": "E",
+      "crop": "faba",
+      "area": 7.5
+    },
+    {
+      "id": "F",
+      "crop": "pea",
+      "area": 5.0
+    }
+  ],
+  "contracts": [
+    {
+      "id": "c1",
+      "offerId": "o3",
+      "buyer": "Buyer C",
+      "crop": "faba",
+      "contract": "Cooperative",
+      "harvest": 2026,
+      "status": "delivering",
+      "committedT": 18,
+      "deliveredT": 11,
+      "priceEurT": 335,
+      "windowStart": "2026-08-15",
+      "windowEnd": "2026-11-30"
+    },
+    {
+      "id": "c2",
+      "offerId": "o2",
+      "buyer": "Buyer B",
+      "crop": "pea",
+      "contract": "Spot",
+      "harvest": 2026,
+      "status": "fulfilled",
+      "committedT": 12,
+      "deliveredT": 12,
+      "priceEurT": 255,
+      "windowStart": "2026-07-10",
+      "windowEnd": "2026-09-15"
+    },
+    {
+      "id": "c3",
+      "offerId": "o8",
+      "buyer": "Buyer H",
+      "crop": "faba",
+      "contract": "Forward",
+      "harvest": 2027,
+      "status": "upcoming",
+      "committedT": 10,
+      "deliveredT": 0,
+      "priceEurT": 325,
+      "windowStart": "2027-08-01",
+      "windowEnd": "2028-06-30"
+    }
   ]
 }

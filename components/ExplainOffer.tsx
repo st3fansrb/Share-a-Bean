@@ -2,7 +2,7 @@
 import "./assist.css";
 import { useAssist, SourceTag } from "./useAssist";
 
-export function ExplainOffer({ offerId, label = "Explain simply" }: { offerId: string; label?: string }) {
+export function ExplainOffer({ offerId, label = "Explain" }: { offerId: string; label?: string }) {
   const { reply, busy, run } = useAssist();
   return (
     <div>

@@ -15,7 +15,7 @@ export function Assistant() {
     <>
       {open && (
         <div className="assist-panel" role="dialog" aria-label="Help">
-          <h3>Need help?</h3>
+          <h3>Help</h3>
           <button className="btn ghost" disabled={busy} onClick={() => run({ kind: "page", path })}>Explain this page</button>
           <div className="qs">
             {suggestedQuestions.map((s) => <button key={s} className="q" onClick={() => { setQ(s); ask(s); }}>{s}</button>)}
@@ -28,7 +28,7 @@ export function Assistant() {
           {reply && !busy && <p className="ai-answer">{reply.text}<SourceTag source={reply.source} /></p>}
         </div>
       )}
-      <button className="btn assist-fab" onClick={() => setOpen(!open)} aria-expanded={open}>{open ? "Close" : "Help me understand"}</button>
+      <button className="btn assist-fab" onClick={() => setOpen(!open)} aria-expanded={open}>{open ? "Close" : "Help"}</button>
     </>
   );
 }
