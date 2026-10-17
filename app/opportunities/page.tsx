@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { offerData, cropLabel } from "@/lib/data";
 import { Synthetic } from "@/components/Tag";
+import { BestOffer } from "@/components/BestOffer";
+import { ExplainOffer } from "@/components/ExplainOffer";
 
 export default function Opportunities() {
   return (
     <>
       <h1>Buyers <Synthetic>demo offers</Synthetic></h1>
       <p className="lede">Who wants legumes near you.</p>
+      <BestOffer />
       <div className="grid">
         {offerData.map((o) => (
           <div key={o.id} className="card">
@@ -22,6 +25,7 @@ export default function Opportunities() {
                 <Link className="btn" href={`/calculator?offer=${o.id}&crop=${o.crop}&price=${Math.round((o.priceEurT[0] + o.priceEurT[1]) / 2)}`}>What would I earn?</Link>
               </div>
             </div>
+            <ExplainOffer offerId={o.id} />
           </div>
         ))}
       </div>
