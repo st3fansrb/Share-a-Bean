@@ -1,4 +1,4 @@
-// Plain-language layer. Everything here works without an API key; the Claude
+// Plain-language layer. Everything here works without an API key; the AI
 // API (app/api/assist) only rewords the same facts when a key is set.
 
 export const pageExplainers: { prefix: string; text: string }[] = [
