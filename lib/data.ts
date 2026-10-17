@@ -6,6 +6,7 @@ import cap from "@/data/cap.json";
 export type CropId = keyof typeof crops.crops;
 
 export const farmData = farm;
+export const contractData = farm.contracts;
 export const offerData = offers.offers;
 export const cropData = crops.crops;
 export const capSchemes = cap.schemes;

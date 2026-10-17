@@ -5,9 +5,8 @@ import { icons, BeanMark } from "./Icons";
 
 const items = [
   { href: "/", label: "Home", icon: icons.home },
-  { href: "/farm", label: "My Farm", icon: icons.farm },
+  { href: "/farm", label: "My Farm & Contracts", icon: icons.farm },
   { href: "/opportunities", label: "Opportunities", icon: icons.opportunities },
-  { href: "/contracts", label: "Contracts", icon: icons.contracts },
   { href: "/calculator", label: "Crop Calculator", icon: icons.calculator },
   { href: "/cap", label: "CAP Benefits", icon: icons.cap },
   { href: "/insights", label: "Market Insights", icon: icons.insights },
