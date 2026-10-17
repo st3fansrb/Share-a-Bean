@@ -13,7 +13,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ c
   const price = q.price ? +q.price : offer ? Math.round((offer.priceEurT[0] + offer.priceEurT[1]) / 2) : undefined;
   // The farm's own region (Centre-Val de Loire = FRB0) is where the offer would be delivered.
   const prefill = LEGS.includes(crop) && crop in CROPS
-    ? { crop, price, region: farm.region.startsWith("Centre") ? "FRB0" : undefined, label: offer ? offer.buyer : "Selected crop" }
+    ? { crop, price, region: farm.region.startsWith("Centre") ? "FRB0" : undefined, label: offer ? offer.buyer : "Selected crop", offerId: offer?.id }
     : undefined;
   return (
     <>

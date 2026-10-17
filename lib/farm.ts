@@ -24,6 +24,7 @@ const HEADERS = {
   id: ["id", "parcel", "parcel_id", "parcelid", "ilot", "num_ilot", "field", "field_id"],
   crop: ["crop", "culture", "crop_name", "crop_code", "product", "cultivation"],
   area: ["area", "area_ha", "ha", "surface", "surface_ha", "size", "hectares"],
+  ecoScheme: ["ecoscheme", "eco_scheme", "eco", "schemes", "scheme", "certification", "mesure_agro"],
 };
 
 export type ImportResult = { parcels: Parcel[]; errors: string[] };
@@ -37,7 +38,7 @@ export function parseParcelCsv(text: string): ImportResult {
   const col = Object.fromEntries(
     Object.entries(HEADERS).map(([k, names]) => [k, head.findIndex((h) => names.includes(h))]),
   ) as Record<keyof typeof HEADERS, number>;
-  const missing = (Object.keys(col) as (keyof typeof col)[]).filter((k) => col[k] < 0);
+  const missing = (["id", "crop", "area"] as const).filter((k) => col[k] < 0);
   if (missing.length) return { parcels: [], errors: [`Missing column: ${missing.join(", ")}. Expected parcel id, crop, area in ha.`] };
 
   const parcels: Parcel[] = [];
@@ -49,12 +50,13 @@ export function parseParcelCsv(text: string): ImportResult {
     const id = c[col.id];
     const crop = cropFromText(c[col.crop] ?? "");
     const area = Number((c[col.area] ?? "").replace(",", "."));
+    const ecoScheme = col.ecoScheme >= 0 && c[col.ecoScheme]?.trim() ? c[col.ecoScheme].trim() : undefined;
     if (!id) return void errors.push(`Row ${n}: no parcel id.`);
     if (seen.has(id)) return void errors.push(`Row ${n}: parcel ${id} appears twice.`);
     if (!crop) return void errors.push(`Row ${n}: crop "${c[col.crop] ?? ""}" is not one we track yet.`);
     if (!Number.isFinite(area) || area <= 0) return void errors.push(`Row ${n}: area must be a positive number of ha.`);
     seen.add(id);
-    parcels.push({ id, crop, area });
+    parcels.push({ id, crop, area, ...(ecoScheme ? { ecoScheme } : {}) });
   });
   return { parcels, errors };
 }

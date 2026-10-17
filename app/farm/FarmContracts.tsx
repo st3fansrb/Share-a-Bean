@@ -88,7 +88,15 @@ export default function FarmContracts({ contracts, yields }: { contracts: FarmCo
           <ul className="note" style={{ color: "var(--clay)", marginTop: 0 }}>{errors.slice(0, 3).map((e) => <li key={e}>{e}</li>)}{errors.length > 3 && <li>and {errors.length - 3} more</li>}</ul>
         )}
         <table>
-          <thead><tr><th>Field</th><th>Crop</th><th className="num">ha</th><th className="num">Harvest</th></tr></thead>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Crop</th>
+              <th className="num">ha</th>
+              <th>CAP scheme</th>
+              <th className="num">Harvest</th>
+            </tr>
+          </thead>
           <tbody>
             {parcels.map((p) => {
               const c = cropData[p.crop as keyof typeof cropData];
@@ -97,13 +105,14 @@ export default function FarmContracts({ contracts, yields }: { contracts: FarmCo
                   <td>{p.id}</td>
                   <td><span className={`chip ${c?.legume ? "legume" : ""}`}>{cropLabel(p.crop)}</span></td>
                   <td className="num">{p.area.toFixed(1)}</td>
+                  <td><span className="chip" style={{ fontSize: 11, background: "var(--line-soft)" }}>{p.ecoScheme ?? "Basic payment"}</span></td>
                   <td className="num muted">{t(p.area * (yields[p.crop] ?? 0))}</td>
                 </tr>
               );
             })}
           </tbody>
         </table>
-        <p className="note">Import a CSV: field, crop, ha. <a href="/sample-parcels.csv" download>Sample</a></p>
+        <p className="note">Import a CSV like an IACS export: <code>field,crop,ha,eco_scheme</code>. Demo parcels only. <a href="/sample-parcels.csv" download>Sample</a></p>
       </section>
 
       <section id="shared" className="reveal d4">
