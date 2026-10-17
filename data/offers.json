@@ -1,77 +1,26 @@
 {
-  "_note": "Synthetic buyer offers, generated for the demo (not copied from the hackathon dataset, not real buyers). Modelled on spot, forward and cooperative contracts. The buyer role comes later.",
+  "_note": "Synthetic buyers for the demo, not real companies. Buyer mix follows FranceAgriMer's protein-crop sheet 2026 (477 collectors: 117 cooperatives, 360 traders; outlets feed, human food, export; campaign July to June). Contract types spot/forward/cooperative as in the hackathon synthetic sales data; volume bands sized from aggregate lot-size statistics of that data (median lot 64 t, 90th percentile ~335 t). Price bands are indicative guesses, not market quotes. No dataset rows are copied.",
   "offers": [
     {
       "id": "o1",
       "buyer": "Buyer A",
-      "type": "Food processor",
+      "type": "Trader",
       "crop": "faba",
       "volumeT": [
-        500,
-        2000
+        300,
+        1500
       ],
       "priceEurT": [
         320,
-        360
+        355
       ],
       "contract": "Forward",
-      "delivery": "Aug to Oct",
-      "distanceKm": 45
+      "delivery": "Jul to Dec",
+      "distanceKm": 32
     },
     {
       "id": "o2",
       "buyer": "Buyer B",
-      "type": "Feed company",
-      "crop": "lupin",
-      "volumeT": [
-        1000,
-        3000
-      ],
-      "priceEurT": [
-        340,
-        400
-      ],
-      "contract": "Fixed or formula",
-      "delivery": "Aug to Sep",
-      "distanceKm": 30
-    },
-    {
-      "id": "o3",
-      "buyer": "Buyer C",
-      "type": "Biogas plant",
-      "crop": "pea",
-      "volumeT": [
-        300,
-        900
-      ],
-      "priceEurT": [
-        220,
-        280
-      ],
-      "contract": "Framework",
-      "delivery": "Jun to Oct",
-      "distanceKm": 60
-    },
-    {
-      "id": "o4",
-      "buyer": "Buyer D",
-      "type": "Cooperative",
-      "crop": "faba",
-      "volumeT": [
-        200,
-        800
-      ],
-      "priceEurT": [
-        330,
-        350
-      ],
-      "contract": "Cooperative",
-      "delivery": "Sep to Oct",
-      "distanceKm": 20
-    },
-    {
-      "id": "o5",
-      "buyer": "Buyer E",
       "type": "Feed company",
       "crop": "pea",
       "volumeT": [
@@ -80,45 +29,96 @@
       ],
       "priceEurT": [
         240,
-        270
+        275
+      ],
+      "contract": "Spot",
+      "delivery": "Jul to Sep",
+      "distanceKm": 45
+    },
+    {
+      "id": "o3",
+      "buyer": "Buyer C",
+      "type": "Cooperative",
+      "crop": "faba",
+      "volumeT": [
+        200,
+        800
+      ],
+      "priceEurT": [
+        325,
+        350
+      ],
+      "contract": "Cooperative",
+      "delivery": "Aug to Nov",
+      "distanceKm": 18
+    },
+    {
+      "id": "o4",
+      "buyer": "Buyer D",
+      "type": "Food processor",
+      "crop": "pea",
+      "volumeT": [
+        500,
+        2000
+      ],
+      "priceEurT": [
+        270,
+        310
+      ],
+      "contract": "Forward",
+      "delivery": "Aug to Jun",
+      "distanceKm": 58
+    },
+    {
+      "id": "o5",
+      "buyer": "Buyer E",
+      "type": "Biogas plant",
+      "crop": "pea",
+      "volumeT": [
+        150,
+        500
+      ],
+      "priceEurT": [
+        200,
+        240
       ],
       "contract": "Spot",
       "delivery": "Jul to Aug",
-      "distanceKm": 75
+      "distanceKm": 26
     },
     {
       "id": "o6",
       "buyer": "Buyer F",
-      "type": "Food processor",
-      "crop": "pea",
+      "type": "Trader",
+      "crop": "lupin",
       "volumeT": [
-        600,
-        1500
+        100,
+        600
       ],
       "priceEurT": [
-        245,
-        285
+        350,
+        400
       ],
       "contract": "Forward",
-      "delivery": "Jul to Sep",
-      "distanceKm": 38
+      "delivery": "Aug to Dec",
+      "distanceKm": 64
     },
     {
       "id": "o7",
       "buyer": "Buyer G",
       "type": "Cooperative",
-      "crop": "lupin",
+      "crop": "pea",
       "volumeT": [
-        150,
-        600
+        250,
+        900
       ],
       "priceEurT": [
-        350,
-        390
+        245,
+        270
       ],
       "contract": "Cooperative",
       "delivery": "Aug to Oct",
-      "distanceKm": 52
+      "distanceKm": 22
     },
     {
       "id": "o8",
@@ -126,49 +126,49 @@
       "type": "Feed company",
       "crop": "faba",
       "volumeT": [
-        800,
-        2500
+        600,
+        2000
       ],
       "priceEurT": [
         315,
         345
       ],
-      "contract": "Fixed or formula",
-      "delivery": "Aug to Nov",
-      "distanceKm": 68
+      "contract": "Forward",
+      "delivery": "Aug to Jun",
+      "distanceKm": 72
     },
     {
       "id": "o9",
       "buyer": "Buyer I",
-      "type": "Biogas plant",
-      "crop": "faba",
-      "volumeT": [
-        250,
-        700
-      ],
-      "priceEurT": [
-        210,
-        250
-      ],
-      "contract": "Spot",
-      "delivery": "Jul to Aug",
-      "distanceKm": 25
-    },
-    {
-      "id": "o10",
-      "buyer": "Buyer J",
       "type": "Food processor",
       "crop": "lupin",
       "volumeT": [
-        300,
-        1000
+        200,
+        900
       ],
       "priceEurT": [
         360,
         410
       ],
-      "contract": "Framework",
+      "contract": "Spot",
       "delivery": "Aug to Oct",
+      "distanceKm": 50
+    },
+    {
+      "id": "o10",
+      "buyer": "Buyer J",
+      "type": "Trader",
+      "crop": "faba",
+      "volumeT": [
+        400,
+        1800
+      ],
+      "priceEurT": [
+        310,
+        340
+      ],
+      "contract": "Spot",
+      "delivery": "Jul to Sep",
       "distanceKm": 80
     }
   ]

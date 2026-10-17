@@ -8,6 +8,7 @@ export const TYPE_COLOR: Record<string, string> = {
   "Feed company": "#3e6a8a",
   "Biogas plant": "#b8761f",
   "Cooperative": "#7a4f8a",
+  "Trader": "#8a4a3a",
 };
 
 export function BuyerMap() {
