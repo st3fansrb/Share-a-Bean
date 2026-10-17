@@ -33,7 +33,7 @@
       "status": "active",
       "title": "Protein crop support",
       "amount": "about 104 €/ha",
-      "what": "Paid for growing pea, faba bean, lupin, soy or dry pulses.",
+      "what": "For growing pea, faba bean, lupin, soy or dry pulses.",
       "eligibility": [
         "Legumes must be more than half of the seed in a mixture.",
         "Mixtures with grasses are paid in the sowing year only.",
@@ -57,14 +57,12 @@
       "id": "eco",
       "status": "active",
       "title": "Eco-scheme",
-      "amount": "about 45 to 62 €/ha, provisional",
-      "what": "A yearly payment on all your hectares once you collect enough points.",
+      "amount": "not confirmed yet",
+      "what": "A yearly payment from Alexander's design. We have not checked the rules.",
       "eligibility": [
-        "Base level from 4 points, higher level from 5.",
-        "Legumes on at least 10% of your arable land add 3 points, at least 5% add 2.",
-        "Check your points below."
+        "Not confirmed yet."
       ],
-      "note": "2026 amounts still to confirm."
+      "note": ""
     },
     {
       "id": "rotation",
