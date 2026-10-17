@@ -7,7 +7,6 @@ const items = [
   { href: "/", label: "Home", icon: icons.home },
   { href: "/farm", label: "My Farm", icon: icons.farm },
   { href: "/opportunities", label: "Buyers", icon: icons.opportunities },
-  { href: "/contracts", label: "Contracts", icon: icons.contracts },
   { href: "/calculator", label: "Calculator", icon: icons.calculator },
   { href: "/cap", label: "CAP support", icon: icons.cap },
   { href: "/insights", label: "Yields", icon: icons.insights },

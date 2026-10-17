@@ -1,10 +1,12 @@
 "use client";
 import { useState } from "react";
-import { farmData, offerData, cropLabel } from "@/lib/data";
+import { offerData, cropLabel } from "@/lib/data";
+import { useParcels } from "@/lib/useParcels";
 
 export const LOG_KEY = "sab-contracts-log";
 
 export default function ShareForm() {
+  const { parcels: farmParcels } = useParcels();
   const [offer, setOffer] = useState(offerData[0].id);
   const [parcels, setParcels] = useState<string[]>([]);
   const [done, setDone] = useState(false);
@@ -25,7 +27,7 @@ export default function ShareForm() {
         {offerData.map((o) => <option key={o.id} value={o.id}>{o.buyer} ({cropLabel(o.crop)})</option>)}
       </select>
       <h2 style={{ marginTop: 16 }}>Which parcels?</h2>
-      {farmData.parcels.map((p) => (
+      {farmParcels.map((p) => (
         <div key={p.id}><label><input type="checkbox" checked={parcels.includes(p.id)} onChange={() => toggle(p.id)} /> Parcel {p.id}: {cropLabel(p.crop)}, {p.area} ha</label></div>
       ))}
       <p className="muted">Only ticked parcels, only this buyer.</p>
