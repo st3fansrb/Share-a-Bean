@@ -35,6 +35,8 @@ export type CropAssumption = {
   costEurHa: number;
   /** Set when yieldTHa comes from a cited source; otherwise it is a placeholder. */
   yieldSource?: string;
+  /** Set when priceEurT is not a placeholder (e.g. synthetic hackathon data). */
+  priceSource?: string;
 };
 export type CalculatorData = {
   crops: CropAssumption[];
@@ -64,7 +66,7 @@ export type CapData = { country: "FR"; schemes: CapScheme[]; ecoScheme: EcoSchem
 
 // Owner: Alexander. GET /api/insights
 export type CropPerformance = {
-  crop: CropId | "pulses";
+  crop: CropId | "pulses" | "cereals";
   region: string; // NUTS3 or NUTS2 code
   year: number;
   areaHa: number | null;
