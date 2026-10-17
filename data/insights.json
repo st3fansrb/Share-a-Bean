@@ -1,0 +1,9 @@
+{
+  "_note": "PLACEHOLDER rows in the shape of crop_full_framework.csv (NUTS3, 2017-2020). Pulses have area and nitrogen but no yield. Replace with a derived extract, never raw data.",
+  "rows": [
+    { "crop": "pulses", "region": "FRB06", "year": 2020, "areaHa": 1200, "yieldTHa": null, "nitrogenKgHa": 12 },
+    { "crop": "wheat", "region": "FRB06", "year": 2020, "areaHa": 54000, "yieldTHa": 7.0, "nitrogenKgHa": 170 },
+    { "crop": "rapeseed", "region": "FRB06", "year": 2020, "areaHa": 21000, "yieldTHa": 3.1, "nitrogenKgHa": 150 },
+    { "crop": "sunflower", "region": "FRB06", "year": 2020, "areaHa": 9000, "yieldTHa": 2.4, "nitrogenKgHa": 40 }
+  ]
+}
