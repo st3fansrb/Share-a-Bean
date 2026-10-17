@@ -50,7 +50,7 @@ export default function OpportunitiesList() {
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20, marginTop: 16, alignItems: "center" }}>
-          <div style={{ maxWidth: 340, margin: "0 auto" }}>
+          <div className="mapwrap" style={{ width: "100%", maxWidth: 340, margin: "0 auto" }}>
             <BuyerMap />
           </div>
 
@@ -69,7 +69,7 @@ export default function OpportunitiesList() {
                     style={{
                       padding: "4px 10px",
                       fontSize: 12,
-                      background: cropFilter === c ? "var(--forest-1)" : "var(--card-bg, #fff)",
+                      background: cropFilter === c ? "var(--forest)" : "var(--card-bg, #fff)",
                       color: cropFilter === c ? "#fff" : "var(--text)",
                       border: "1px solid var(--line)",
                     }}
@@ -94,7 +94,7 @@ export default function OpportunitiesList() {
                     style={{
                       padding: "4px 10px",
                       fontSize: 12,
-                      background: contractFilter === ct ? "var(--forest-1)" : "var(--card-bg, #fff)",
+                      background: contractFilter === ct ? "var(--forest)" : "var(--card-bg, #fff)",
                       color: contractFilter === ct ? "#fff" : "var(--text)",
                       border: "1px solid var(--line)",
                     }}
@@ -117,7 +117,7 @@ export default function OpportunitiesList() {
                 step="10"
                 value={maxDistance}
                 onChange={(e) => setMaxDistance(Number(e.target.value))}
-                style={{ width: "100%", accentColor: "var(--forest-1)" }}
+                style={{ width: "100%", accentColor: "var(--forest)" }}
               />
             </div>
 
@@ -137,7 +137,7 @@ export default function OpportunitiesList() {
               key={o.id}
               className="card"
               style={{
-                borderLeft: `4px solid ${TYPE_COLOR[o.type] ?? "var(--forest-1)"}`,
+                borderLeft: `4px solid ${TYPE_COLOR[o.type] ?? "var(--forest)"}`,
                 transition: "transform 0.15s ease",
               }}
             >

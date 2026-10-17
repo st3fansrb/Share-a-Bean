@@ -20,7 +20,7 @@ export function Sidebar() {
       <Link href="/" className="brand">
         <BeanMark />
         <div>
-          <div className="brand-name">share-a-<i>byte</i></div>
+          <div className="brand-name">share-a-<i>bean</i></div>
           <small>France demo</small>
         </div>
       </Link>
