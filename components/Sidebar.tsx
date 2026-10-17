@@ -6,12 +6,12 @@ import { icons, BeanMark } from "./Icons";
 const items = [
   { href: "/", label: "Home", icon: icons.home },
   { href: "/farm", label: "My Farm", icon: icons.farm },
-  { href: "/opportunities", label: "Opportunities", icon: icons.opportunities },
+  { href: "/opportunities", label: "Buyers", icon: icons.opportunities },
   { href: "/contracts", label: "Contracts", icon: icons.contracts },
-  { href: "/calculator", label: "Crop Calculator", icon: icons.calculator },
-  { href: "/cap", label: "CAP Benefits", icon: icons.cap },
-  { href: "/insights", label: "Market Insights", icon: icons.insights },
-  { href: "/knowledge", label: "Knowledge Hub", icon: icons.knowledge },
+  { href: "/calculator", label: "Calculator", icon: icons.calculator },
+  { href: "/cap", label: "CAP support", icon: icons.cap },
+  { href: "/insights", label: "Yields", icon: icons.insights },
+  { href: "/knowledge", label: "Farmer advice", icon: icons.knowledge },
 ];
 
 export function Sidebar() {
@@ -22,7 +22,7 @@ export function Sidebar() {
         <BeanMark />
         <div>
           <div className="brand-name">share-a-<i>byte</i></div>
-          <small>Draft · France demo</small>
+          <small>France demo</small>
         </div>
       </Link>
       <nav className="nav">
@@ -38,8 +38,8 @@ export function Sidebar() {
       </nav>
       <div className="datacard">
         <b>Your data.<br />You decide.</b>
-        Share chosen parcels and crops with one buyer at a time. Nothing else leaves your farm.
-        <div><Link href="/share">Manage data sharing {icons.arrow}</Link></div>
+        You choose what a buyer sees.
+        <div><Link href="/share">Sharing {icons.arrow}</Link></div>
       </div>
     </aside>
   );

@@ -17,11 +17,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ c
     : undefined;
   return (
     <>
-      <h1>Crop Calculator <Synthetic>indicative costs</Synthetic></h1>
-      <p className="lede">Pick a region and a legume to see its gross margin against a conventional crop, with CAP support and the effect on the next two years of the rotation.</p>
+      <h1>Calculator <Synthetic>estimate</Synthetic></h1>
+      <p className="lede">Would a legume beat your usual crop?</p>
       <RegionalCalculator prefill={prefill} />
-      <h2 style={{ marginTop: 40 }}>Your own field</h2>
-      <p className="lede">Enter your own yield, price and cost for a single crop.</p>
+      <h2 style={{ marginTop: 40 }}>Try your own numbers</h2>
       <Calculator initialCrop={q.crop} initialPrice={q.price ? +q.price : undefined} />
     </>
   );

@@ -38,7 +38,7 @@ export default function Calculator({ initialCrop, initialPrice }: { initialCrop?
   return (
     <>
       <div className="card">
-        <h2>Single crop</h2>
+        <h2>One crop</h2>
         <div className="row">
           <div><label>Crop</label>
             <select value={crop} onChange={(e) => pick(e.target.value as Id)}>
@@ -50,11 +50,11 @@ export default function Calculator({ initialCrop, initialPrice }: { initialCrop?
           <div><label>Costs (€/ha)</label><input type="number" value={cost} onChange={(e) => setCost(+e.target.value)} /></div>
         </div>
         <p className="big">{eur(m)} / ha <span className="muted"> ({eur(m * area)} on {area} ha)</span></p>
-        <p className="muted">Includes CAP coupled support {eur(support(crop))}/ha. Wheat reference without support: {eur(ref)}/ha. Estimate, not a forecast.</p>
+        <p className="muted">With CAP support of {eur(support(crop))}/ha. Wheat: {eur(ref)}/ha.</p>
       </div>
 
       <div className="card">
-        <h2>Rotation (3 years)</h2>
+        <h2>3-year rotation</h2>
         <div className="row">
           {rotation.map((id, i) => (
             <div key={i}><label>Year {i + 1}</label>
@@ -66,7 +66,7 @@ export default function Calculator({ initialCrop, initialPrice }: { initialCrop?
           ))}
         </div>
         <p className="big">Average {eur(average(rot.map((r) => r.margin)))} / ha / year</p>
-        <p className="muted">Legume nitrogen credit: {nitrogen.creditKgHa} kg N/ha at {nitrogen.eurKg} €/kg for the crop that follows. Placeholder assumption.</p>
+        <p className="muted">Legumes save {nitrogen.creditKgHa} kg of fertiliser per ha for the next crop.</p>
       </div>
     </>
   );

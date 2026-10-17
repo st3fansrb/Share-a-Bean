@@ -82,7 +82,7 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
   const rid = st.region, region = D.regions[rid], cc = rid.slice(0, 2);
   const res = useMemo(() => calc(st, rid), [st, rid]);
   const L = CROPS[st.leg], C = CROPS[st.comp];
-  const cap = res.cap, gaecOk = st.comp !== "wheat";
+  const cap = res.cap;
   const landLevel = !!region && Object.values(region.y).some((x) => x[2] === "R1");
   const win = res.adv >= 0;
   const maxPart = Math.max(50, ...res.parts.map((p) => Math.abs(p[1])));
@@ -140,7 +140,7 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
           </select>
         </div>
         <div>
-          <label>Compared with</label>
+          <label>Instead of</label>
           <div className="seg" role="radiogroup" aria-label="Compared with">
             {COMPS.map((k) => (
               <button key={k} role="radio" aria-checked={st.comp === k} className={st.comp === k ? "on" : ""} onClick={() => set({ comp: k })}>{CROPS[k].label}</button>
@@ -148,9 +148,9 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
           </div>
         </div>
         <div>
-          <label>Map shows</label>
+          <label>Map</label>
           <div className="seg" role="radiogroup" aria-label="Map shows">
-            {([["adv", "3-yr advantage"], ["y1", "Year 1 only"], ["area", "Legume area"]] as const).map(([k, t]) => (
+            {([["adv", "Gain over 3 years"], ["y1", "Gain this year"], ["area", "Where it grows"]] as const).map(([k, t]) => (
               <button key={k} role="radio" aria-checked={st.metric === k} className={st.metric === k ? "on" : ""} onClick={() => set({ metric: k })}>{t}</button>
             ))}
           </div>
@@ -159,7 +159,7 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
 
       <div className="rc-grid">
         <div className="card rc-map" onMouseLeave={() => setTip(null)}>
-          <p className="note rc-hint">Click a region. Colour is the gross-margin advantage of the legume over three years, with the defaults and your edits.</p>
+          <p className="note rc-hint">Tap a region. Green means the legume earns more.</p>
           <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="EU NUTS 2 regions coloured by legume margin advantage">
             {paths.filter((p) => p.id !== rid).map((p) => (
               <path key={p.id} d={p.d} className="reg" fill={colour(p.id)}
@@ -184,19 +184,19 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
             <h2>{region ? region.n : rid}</h2>
             <div className="rc-kpis">
               <div>
-                <small>{L.label} instead of {C.label.toLowerCase()}, 3-year gross margin</small>
+                <small>{L.label} instead of {C.label.toLowerCase()}, over 3 years</small>
                 <div className={`big ${win ? "pos" : "neg"}`}>{sgn(res.adv)}<span> /ha</span></div>
               </div>
               <div>
-                <small>Year 1 only, incl. CAP</small>
+                <small>This year, with CAP</small>
                 <div className="big sm">{sgn(res.y1)}<span> /ha</span></div>
-                <small>Rotation effects in years 2–3 add {sgn(res.adv - res.y1)}</small>
+                <small>Next 2 years add {sgn(res.adv - res.y1)}</small>
               </div>
             </div>
           </section>
 
           <section className="card rc-sec">
-            <p className="eyebrow">Where the difference comes from</p>
+            <p className="eyebrow">Where the gain comes from</p>
             {res.parts.map(([lbl, v]) => (
               <div key={lbl} className="rc-part">
                 <span>{lbl}</span>
@@ -204,11 +204,11 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
                 <span className="num v">{sgn(v)}</span>
               </div>
             ))}
-            <div className="rc-total"><span>Total advantage</span><span className={`num ${win ? "pos" : "neg"}`}>{sgn(res.adv)}/ha</span></div>
+            <div className="rc-total"><span>Total gain</span><span className={`num ${win ? "pos" : "neg"}`}>{sgn(res.adv)}/ha</span></div>
           </section>
 
-          <section className="card rc-sec">
-            <p className="eyebrow">Rotation view · gross margin €/ha incl. CAP</p>
+          <details className="card rc-sec">
+            <summary><span className="eyebrow">Year by year</span></summary>
             <table>
               <thead><tr><th>Sequence</th><th className="r">Year 1</th><th className="r">Year 2</th><th className="r">Year 3</th><th className="r">Total</th></tr></thead>
               <tbody>
@@ -224,33 +224,24 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
               <div><small>Fertiliser N in year 2</small><b className="num">{fmt(res.l2.n)} kg</b><small className="num">vs {fmt(res.c2.n)} kg · {fmt(res.c2.n - res.l2.n)} kg saved</small></div>
               <div><small>N price</small><b className="num">€{fmt(res.pn, 2)}/kg</b><small>{nP(st, rid).src}</small></div>
             </div>
-          </section>
+          </details>
 
-          <section className="card rc-sec">
-            <p className="eyebrow">CAP payments · {CNAME[cc] || cc} · indicative 2023–27 rates</p>
-            {capRow("biss", "Basic income support (BISS)", "Paid on both crops, so it does not change the difference.", cap.biss)}
-            {capRow("cg", "Coupled income support, protein crops", L.forage ? "Forage-legume rate applies." : "Grain-legume rate applies.", L.forage ? cap.cf : cap.cg, L.forage ? "cf" : "cg")}
-            {capRow("eco", "Eco-scheme (legume / crop diversification)", "Per hectare of legume.", cap.eco)}
+          <details className="card rc-sec">
+            <summary><span className="eyebrow">CAP payments</span></summary>
+                        {capRow("biss", "Basic income support", "Same on both crops.", cap.biss)}
+            {capRow("cg", "Protein crop support", L.forage ? "Fodder legume rate." : "Grain legume rate.", L.forage ? cap.cf : cap.cg, L.forage ? "cf" : "cg")}
+            {capRow("eco", "Eco-scheme", "Per ha of legume.", cap.eco)}
             <label className="rc-chk">
               <input type="checkbox" checked={st.cap.aecm} onChange={(e) => set({ cap: { ...st.cap, aecm: e.target.checked } })} />
-              <span className="grow">Agri-environment (Pillar II)<small>Regional measures vary; enter your contracted rate.</small></span>
+              <span className="grow">Agri-environment<small>Enter your own rate.</small></span>
               <input className="rc-in num" type="number" value={st.cap.aecmVal || 0} aria-label="Agri-environment rate"
                 onChange={(e) => set({ cap: { ...st.cap, aecmVal: +e.target.value } })} />
             </label>
-            <div className="rc-gaec">
-              <span className={`chip ${gaecOk ? "" : "legume"}`}>GAEC 7</span>
-              <span>
-                {gaecOk
-                  ? `Crop rotation condition: ${L.label.toLowerCase()} → wheat and ${C.label.toLowerCase()} → wheat both change crop each year.`
-                  : "Wheat → wheat repeats the same crop. Check your national GAEC 7 rules; the legume sequence complies."}
-                {" "}GAEC 7 is a condition for receiving payments, not a payment.
-              </span>
-            </div>
-            <p className="note">Payment rates are not published by Eurostat. Defaults are approximate planned unit amounts from national CAP Strategic Plans; edit them to match your paying agency.{cc === "FR" && " France: the coupled rates (about 104 and 150 €/ha) come from the team fact check of the 2022 plan; BISS and eco-scheme rates are not verified yet."}</p>
-          </section>
+            <p className="note">Approximate rates from national CAP plans. Edit to match yours.</p>
+          </details>
 
           <details className="card rc-sec" open={!!st.openA} onToggle={(e) => { const o = (e.currentTarget as HTMLDetailsElement).open; if (o !== !!st.openA) set({ openA: o }); }}>
-            <summary><span className="eyebrow">Assumptions · all editable</span></summary>
+            <summary><span className="eyebrow">Change the numbers</span></summary>
             <div className="rc-scroll">
               <table className="rc-assump">
                 <thead><tr><th>Per hectare</th><th className="r">{L.label}</th><th className="r">{C.label}</th><th className="r">Wheat (yr 2–3)</th></tr></thead>
@@ -262,8 +253,8 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
                 </tbody>
               </table>
             </div>
-            <button className="btn ghost" onClick={reset}>Reset to Eurostat &amp; defaults</button>
-            <p className="note">Yields: Eurostat apro_cpshr, production ÷ area, 3 most recent years (NUTS 2; German data at Land level). Lentil and chickpea share the “other dry pulses” yield. Prices: apri_ap_crpouta, national 3-year average, EU median where a country does not report. Lupin uses the pea price. Alfalfa is valued as hay. Costs and agronomic effects are indicative defaults, not statistics.</p>
+            <button className="btn ghost" onClick={reset}>Reset</button>
+            <p className="note">Yields and prices: Eurostat averages. Costs and rotation effects are estimates.</p>
           </details>
         </div>
       </div>
