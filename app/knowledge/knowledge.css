@@ -1,0 +1,82 @@
+.kh { display: flex; flex-direction: column; gap: 16px; }
+.kh-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.kh-who { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.kh .seg { display: flex; flex-wrap: wrap; gap: 4px; }
+.kh .seg button { font: inherit; font-size: 13.5px; padding: 7px 14px; border-radius: 999px; cursor: pointer; border: 1px solid var(--line); background: #fff; color: var(--ink-2); }
+.kh .seg button:hover { background: var(--forest-soft); }
+.kh .seg button.on { background: var(--forest); border-color: var(--forest); color: #f4f0e6; }
+.kh textarea { font: inherit; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); width: 100%; resize: vertical; }
+.kh textarea:focus { outline: 2px solid rgba(47, 106, 73, 0.35); outline-offset: 1px; border-color: var(--forest-2); }
+.kh button:focus-visible { outline: 2px solid rgba(47, 106, 73, 0.45); outline-offset: 2px; }
+
+.kh-discuss { display: grid; grid-template-columns: 200px minmax(0, 1fr) minmax(0, 1.5fr); padding: 0; overflow: hidden; min-height: 620px; }
+.kh-discuss > * { padding: 20px; min-width: 0; }
+.kh-discuss > * + * { border-left: 1px solid var(--line); }
+.kh-discuss aside { display: flex; flex-direction: column; gap: 2px; background: rgba(236, 230, 216, 0.35); }
+.kh-crop { display: flex; justify-content: space-between; font: inherit; font-size: 14px; padding: 8px 10px; border: 0; background: transparent; border-radius: 10px; cursor: pointer; color: var(--ink-2); text-align: left; }
+.kh-crop:hover { background: rgba(30, 74, 50, 0.06); }
+.kh-crop.on { background: var(--forest); color: #f4f0e6; }
+.kh-crop span:last-child { opacity: 0.7; }
+.kh-side-note { margin-top: auto; padding-top: 16px; }
+.kh-list h2 { margin-bottom: 12px; }
+.kh-compose { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.kh-thread { display: flex; flex-direction: column; gap: 3px; width: 100%; text-align: left; font: inherit; padding: 12px 12px 12px 14px; border: 0; border-left: 3px solid transparent; border-bottom: 1px solid var(--line-soft); background: transparent; cursor: pointer; color: var(--ink); }
+.kh-thread:hover { background: rgba(30, 74, 50, 0.04); }
+.kh-thread.on { background: var(--forest-soft); border-left-color: var(--forest); }
+.kh-thread small { color: var(--muted); font-size: 12px; }
+.kh-cr { color: var(--ochre); }
+.kh-detail { display: flex; flex-direction: column; gap: 14px; }
+.kh-detail h1 { font-size: 30px; margin: 4px 0 6px; }
+.kh-ref { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding: 10px 12px; background: var(--ochre-soft); border-radius: 10px; font-size: 13.5px; }
+.kh-replies { display: flex; flex-direction: column; flex: 1; }
+.kh-reply { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line-soft); }
+.kh-reply small { display: block; color: var(--muted); font-size: 12px; }
+.kh-reply p, .kh-detail article p { margin: 0; }
+.kh-reply .me { color: var(--ochre); }
+.kh-post { display: flex; flex-direction: column; gap: 8px; }
+.kh-post .row { align-items: center; flex-wrap: nowrap; }
+.kh-post .row small { flex: 1 1 auto; }
+.kh-post .btn { flex: none; }
+
+.kh-bench { display: grid; grid-template-columns: minmax(360px, 0.9fr) minmax(0, 2fr); gap: 16px; align-items: start; }
+.kh-form h2 { font-size: 28px; }
+.kh-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+.kh-fields .wide { grid-column: 1 / -1; }
+.kh-go { width: 100%; justify-content: center; padding: 12px 16px; font-size: 15px; }
+.kh-result { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.kh-three, .kh-four { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); margin-top: 6px; }
+.kh-four { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 0; border-top: 0; padding: 0; }
+.kh-three > div, .kh-four > div { padding: 12px 14px; }
+.kh-three > div + div, .kh-four > div + div { border-left: 1px solid var(--line-soft); }
+.kh-three small, .kh-four small { display: block; color: var(--muted); font-size: 12px; }
+.kh-three b, .kh-four b { display: block; font-family: var(--display); font-weight: 400; font-size: 32px; line-height: 1.15; }
+.kh-four { padding: 8px 6px; }
+.kh-four b.hero { font-size: 52px; line-height: 1; color: var(--ochre); }
+.kh-hist { position: relative; height: 220px; display: flex; align-items: flex-end; gap: 3px; border-bottom: 1px solid var(--ink); }
+.kh-hist > div:not(.mark) { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; gap: 4px; font-size: 11px; font-weight: 600; color: var(--muted); }
+.kh-hist i { display: block; background: var(--forest-soft); border: 1px solid #c3d3c0; border-radius: 3px 3px 0 0; }
+.kh-hist .you i { background: var(--ochre); border-color: var(--ochre); }
+.kh-hist .you { color: var(--ochre); }
+.kh-hist .mark { position: absolute; top: 0; bottom: 0; border-left: 2px dashed var(--ink); pointer-events: none; }
+.kh-hist .mark span { position: absolute; left: 6px; font-size: 11px; font-weight: 600; white-space: nowrap; background: var(--panel); padding: 0 4px; }
+.kh-axis { display: flex; gap: 3px; margin-top: 4px; }
+.kh-axis span { flex: 1; font-size: 10px; color: var(--muted); overflow: hidden; }
+.kh-after { gap: 8px; }
+.kh-after .btn { flex: 0 0 auto; }
+.kh-data { display: flex; flex-direction: column; gap: 16px; max-width: 1100px; }
+.kh-src { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; padding: 10px 0; border-top: 1px solid var(--line-soft); }
+.kh-src .big { font-size: 24px; margin: 0; color: var(--ochre); }
+.kh-src small { display: block; font-size: 13px; }
+.kh a { color: var(--forest); text-underline-offset: 3px; }
+
+@media (max-width: 1100px) {
+  .kh-discuss { grid-template-columns: 180px minmax(0, 1fr); }
+  .kh-detail { grid-column: 1 / -1; border-left: 0 !important; border-top: 1px solid var(--line); }
+  .kh-bench { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .kh-discuss { grid-template-columns: 1fr; }
+  .kh-discuss > * + * { border-left: 0; border-top: 1px solid var(--line); }
+  .kh-four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kh-reply { grid-template-columns: 1fr; gap: 2px; }
+}

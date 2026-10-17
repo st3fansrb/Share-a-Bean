@@ -11,7 +11,7 @@ const items = [
   { href: "/calculator", label: "Crop Calculator", icon: icons.calculator },
   { href: "/cap", label: "CAP Benefits", icon: icons.cap },
   { href: "/insights", label: "Market Insights", icon: icons.insights },
-  { href: "/knowledge", label: "Knowledge Hub", icon: icons.knowledge, later: true },
+  { href: "/knowledge", label: "Knowledge Hub", icon: icons.knowledge },
 ];
 
 export function Sidebar() {
@@ -29,7 +29,7 @@ export function Sidebar() {
         {items.map((i) => {
           const on = i.href === "/" ? path === "/" : path.startsWith(i.href);
           return (
-            <Link key={i.href} href={i.href} className={`${on ? "on" : ""} ${i.later ? "later" : ""}`}>
+            <Link key={i.href} href={i.href} className={on ? "on" : ""}>
               {i.icon}
               {i.label}
             </Link>
