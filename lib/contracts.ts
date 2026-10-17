@@ -68,7 +68,7 @@ export type InsightsData = { rows: CropPerformance[] };
 export type Offer = {
   id: string;
   buyer: string;
-  type: "Food processor" | "Feed company" | "Biogas plant" | "Cooperative";
+  type: "Food processor" | "Feed company" | "Biogas plant" | "Cooperative" | "Trader";
   crop: CropId;
   volumeT: [number, number];
   priceEurT: [number, number];
