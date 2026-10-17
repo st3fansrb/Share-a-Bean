@@ -7,6 +7,10 @@ export const ecoLevel = (pts: number, e: EcoScheme): EcoLevel =>
 
 const rate = (l: EcoLevel, e: EcoScheme) => (l === "higher" ? e.higherEurHa : l === "base" ? e.baseEurHa : 0);
 
+/** Eco-scheme points a legume share earns. */
+export const legumePoints = (share: number, legumeHa: number, e: EcoScheme) =>
+  share >= 0.1 ? e.legumePtsAt10Pct : share >= 0.05 || legumeHa > 5 ? e.legumePtsAt5Pct : 0;
+
 /** Extra CAP money a legume plan brings: coupled support on legume ha, plus any eco-scheme level gained on all ha. */
 export function capBenefit(
   input: { areaHa: number; legumeHa: number; pointsNow: number },
@@ -16,7 +20,7 @@ export function capBenefit(
   const area = Math.max(0, input.areaHa);
   const leg = Math.min(Math.max(0, input.legumeHa), area);
   const share = area ? leg / area : 0;
-  const legumePts = share >= 0.1 ? e.legumePtsAt10Pct : share >= 0.05 || leg > 5 ? e.legumePtsAt5Pct : 0;
+  const legumePts = legumePoints(share, leg, e);
   const pointsAfter = input.pointsNow + legumePts;
   const before = ecoLevel(input.pointsNow, e);
   const after = ecoLevel(pointsAfter, e);

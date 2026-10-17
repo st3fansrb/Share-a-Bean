@@ -9,7 +9,7 @@ export default function Page() {
   return (
     <>
       <h1>CAP support</h1>
-      <p className="lede">What legumes can add to your CAP payments.</p>
+      <p className="lede">Which rules apply to legumes, what is coming, and how to qualify.</p>
       <CapBenefits cap={cap} areaHa={areaHa} legumeHa={legumeHa || 10} points={3} />
     </>
   );

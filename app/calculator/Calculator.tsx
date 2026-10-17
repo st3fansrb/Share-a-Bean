@@ -50,7 +50,7 @@ export default function Calculator({ initialCrop, initialPrice }: { initialCrop?
           <div><label>Costs (€/ha)</label><input type="number" value={cost} onChange={(e) => setCost(+e.target.value)} /></div>
         </div>
         <p className="big">{eur(m)} / ha <span className="muted"> ({eur(m * area)} on {area} ha)</span></p>
-        <p className="muted">With CAP support of {eur(support(crop))}/ha. Wheat: {eur(ref)}/ha.</p>
+        <p className="muted">With protein crop support of {eur(support(crop))}/ha (rules on CAP support). Wheat: {eur(ref)}/ha.</p>
       </div>
 
       <div className="card">

@@ -61,8 +61,17 @@ export type EcoScheme = {
   legumePtsAt10Pct: number; legumePtsAt5Pct: number;
   source: string;
 };
-export type CapRule = { id: string; label: string; note: string };
-export type CapData = { country: "FR"; schemes: CapScheme[]; ecoScheme: EcoScheme; rules: CapRule[] };
+export type CapProgramme = {
+  id: string;
+  status: "active" | "next" | "proposed";
+  title: string;
+  /** Short plain text, not for maths: money lives in the Calculator. */
+  amount: string;
+  what: string;
+  eligibility: string[];
+  note: string;
+};
+export type CapData = { country: "FR"; basicEurHa: number; schemes: CapScheme[]; ecoScheme: EcoScheme; programmes: CapProgramme[] };
 
 // Owner: Alexander. GET /api/insights
 export type CropPerformance = {
