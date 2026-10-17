@@ -32,7 +32,7 @@ export const getCalculator = (): Envelope<CalculatorData> => {
 };
 
 export const getInsights = (): Envelope<InsightsData> =>
-  ({ meta: placeholder, data: { rows: insights.rows as InsightsData["rows"] } });
+  ({ meta: { provenance: "derived", source: "DG AGRI hackathon crop_full_framework.csv, FRB06, 2020 (aggregates)" }, data: { rows: insights.rows as InsightsData["rows"] } });
 
 export const getOpportunities = (): Envelope<OpportunitiesData> =>
   ({ meta: synthetic, data: { offers: offers.offers as OpportunitiesData["offers"] } });

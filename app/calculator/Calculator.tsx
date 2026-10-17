@@ -45,7 +45,7 @@ export default function Calculator({ initialCrop, initialPrice }: { initialCrop?
               {ids.map((id) => <option key={id} value={id}>{cropData[id].label}</option>)}
             </select></div>
           <div><label>Area (ha)</label><input type="number" value={area} onChange={(e) => setArea(+e.target.value)} /></div>
-          <div><label>Yield (t/ha)</label><input type="number" step="0.1" value={yieldT} onChange={(e) => setYield(+e.target.value)} /></div>
+          <div><label>Yield (t/ha)</label><input type="number" step="0.1" value={yieldT} onChange={(e) => setYield(+e.target.value)} />{(cropData[crop] as { yieldSource?: string }).yieldSource && <small className="muted">Sourced: {(cropData[crop] as { yieldSource?: string }).yieldSource}</small>}</div>
           <div><label>Price (€/t)</label><input type="number" value={price} onChange={(e) => setPrice(+e.target.value)} /></div>
           <div><label>Costs (€/ha)</label><input type="number" value={cost} onChange={(e) => setCost(+e.target.value)} /></div>
         </div>
