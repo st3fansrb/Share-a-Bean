@@ -1,5 +1,5 @@
 {
-  "_note": "Hand-curated CAP support table. Coupled rates match the France fact check (/fact-check). Eco-scheme 2026 values are from Alexander's design (provisional, to confirm with TelePAC 2026).",
+  "_note": "Hand-curated France CAP table. Coupled rates match the France fact check. Eco-scheme and basic-income values are provisional (to confirm with TelePAC 2026). This file is the single source for every CAP number in the app, including the Calculator.",
   "schemes": [
     {
       "id": "coupled-protein",
@@ -26,16 +26,102 @@
     "legumePtsAt5Pct": 2,
     "source": "TO ADD (TelePAC 2026, provisional)"
   },
-  "rules": [
+  "basicEurHa": 128,
+  "programmes": [
     {
-      "id": "maec",
-      "label": "Regional agri-environment contracts (MAEC)",
-      "note": "Varies by region. No double funding with the eco-scheme."
+      "id": "coupled-protein",
+      "status": "active",
+      "title": "Protein crop support",
+      "amount": "about 104 €/ha",
+      "what": "Paid for growing pea, faba bean, lupin, soy or dry pulses.",
+      "eligibility": [
+        "Legumes must be more than half of the seed in a mixture.",
+        "Mixtures with grasses are paid in the sowing year only.",
+        "Declare the field in your yearly CAP declaration (TelePAC)."
+      ],
+      "note": "The rate moves each year with claims and budget."
     },
     {
-      "id": "bcae7",
-      "label": "Crop rotation rule (BCAE 7)",
-      "note": "A legume counts as a crop change."
+      "id": "coupled-fodder",
+      "status": "active",
+      "title": "Fodder legume support",
+      "amount": "about 150 €/ha",
+      "what": "Paid for lucerne, clover and other fodder legumes.",
+      "eligibility": [
+        "Keep at least 5 livestock units, or have a contract with a livestock farmer.",
+        "Sign the contract before 15 May."
+      ],
+      "note": ""
+    },
+    {
+      "id": "eco",
+      "status": "active",
+      "title": "Eco-scheme",
+      "amount": "about 45 to 62 €/ha, provisional",
+      "what": "A yearly payment on all your hectares once you collect enough points.",
+      "eligibility": [
+        "Base level from 4 points, higher level from 5.",
+        "Legumes on at least 10% of your arable land add 3 points, at least 5% add 2.",
+        "Check your points below."
+      ],
+      "note": "2026 amounts still to confirm."
+    },
+    {
+      "id": "rotation",
+      "status": "active",
+      "title": "Crop rotation rule",
+      "amount": "a condition",
+      "what": "You must change crops on your arable land to receive CAP payments.",
+      "eligibility": [
+        "A legume counts as a crop change."
+      ],
+      "note": ""
+    },
+    {
+      "id": "maec",
+      "status": "active",
+      "title": "Regional agri-environment contract",
+      "amount": "varies by region",
+      "what": "A 5-year contract with extra payments for farming practices.",
+      "eligibility": [
+        "Offers differ by region; ask your chamber of agriculture.",
+        "Cannot be paid twice for the same practice as the eco-scheme."
+      ],
+      "note": ""
+    },
+    {
+      "id": "simplification",
+      "status": "next",
+      "title": "Simpler CAP rules",
+      "amount": "adopted Dec 2025",
+      "what": "Fewer checks (one on-the-spot inspection a year) and up to 3,000 € for small farms.",
+      "eligibility": [
+        "Applies to all farms; no extra step to join."
+      ],
+      "note": "Exact start date to confirm."
+    },
+    {
+      "id": "written-contracts",
+      "status": "next",
+      "title": "Written contracts for farmers",
+      "amount": "agreed Mar 2026",
+      "what": "Buyers will have to put the deal with farmers in writing.",
+      "eligibility": [
+        "Nothing to do yet.",
+        "Contracts in this app already show terms in writing."
+      ],
+      "note": "Final adoption and date to confirm."
+    },
+    {
+      "id": "post-2027",
+      "status": "proposed",
+      "title": "New CAP from 2028",
+      "amount": "proposal, not law",
+      "what": "One fund per country, national plans due in 2027. Legume support is not decided.",
+      "eligibility": [
+        "Nothing to do yet."
+      ],
+      "note": "Today's rates run to the end of 2027."
     }
   ]
 }

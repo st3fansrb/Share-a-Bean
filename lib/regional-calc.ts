@@ -1,6 +1,7 @@
 // Regional legume vs conventional crop margin model (EU NUTS 2). Pure functions;
 // the UI keeps the overrides. Data: Eurostat snapshot in data/eurostat/legume.json.
 import raw from "@/data/eurostat/legume.json";
+import capJson from "@/data/cap.json";
 
 type YieldRow = [number, string, string?];
 type Region = { n: string; c: string; y: Record<string, YieldRow>; a: Record<string, [number, string]> };
@@ -41,12 +42,14 @@ export const LEGS: CropKey[] = ["pea", "faba", "soy", "lupin", "lentil", "chickp
 export const COMPS: CropKey[] = ["wheat", "barley", "maize", "rapeseed", "sunflower"];
 
 type CapRates = { biss: number; cg: number; cf: number; eco: number };
+// France comes from data/cap.json, the single source for CAP numbers. Eco-scheme is the base level, provisional.
+const FR_CAP = { biss: capJson.basicEurHa, cg: capJson.schemes.find((x) => x.id === "coupled-protein")!.eurHa, cf: capJson.schemes.find((x) => x.id === "coupled-fodder-legume")!.eurHa, eco: capJson.ecoScheme.baseEurHa };
 // Indicative CAP Strategic Plan 2023-27 unit amounts, EUR/ha. Verify with the national paying agency.
 export const CAP: Record<string, CapRates> = {
   AT: { biss: 210, cg: 0, cf: 0, eco: 0 }, BE: { biss: 160, cg: 100, cf: 100, eco: 50 }, BG: { biss: 107, cg: 140, cf: 90, eco: 40 },
   CY: { biss: 147, cg: 0, cf: 0, eco: 0 }, CZ: { biss: 150, cg: 150, cf: 0, eco: 0 }, DE: { biss: 156, cg: 0, cf: 0, eco: 45 },
   DK: { biss: 197, cg: 0, cf: 0, eco: 0 }, EE: { biss: 117, cg: 60, cf: 0, eco: 0 }, EL: { biss: 135, cg: 140, cf: 0, eco: 0 },
-  ES: { biss: 140, cg: 50, cf: 50, eco: 50 }, FI: { biss: 117, cg: 100, cf: 0, eco: 0 }, FR: { biss: 128, cg: 104, cf: 150, eco: 60 },
+  ES: { biss: 140, cg: 50, cf: 50, eco: 50 }, FI: { biss: 117, cg: 100, cf: 0, eco: 0 }, FR: FR_CAP,
   HR: { biss: 133, cg: 130, cf: 100, eco: 30 }, HU: { biss: 140, cg: 140, cf: 80, eco: 40 }, IE: { biss: 175, cg: 350, cf: 0, eco: 0 },
   IT: { biss: 165, cg: 70, cf: 0, eco: 0 }, LT: { biss: 100, cg: 120, cf: 0, eco: 50 }, LU: { biss: 150, cg: 0, cf: 0, eco: 0 },
   LV: { biss: 95, cg: 100, cf: 0, eco: 30 }, MT: { biss: 200, cg: 0, cf: 0, eco: 0 }, NL: { biss: 210, cg: 0, cf: 0, eco: 0 },

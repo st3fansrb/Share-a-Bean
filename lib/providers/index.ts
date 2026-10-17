@@ -19,7 +19,7 @@ export const getKnowledge = (): Envelope<KnowledgeData> =>
   ({ meta: placeholder, data: { articles: knowledge.articles } });
 
 export const getCap = (): Envelope<CapData> =>
-  ({ meta: placeholder, data: { country: "FR", schemes: cap.schemes as CapData["schemes"], ecoScheme: cap.ecoScheme, rules: cap.rules } });
+  ({ meta: placeholder, data: { country: "FR", basicEurHa: cap.basicEurHa, schemes: cap.schemes as CapData["schemes"], ecoScheme: cap.ecoScheme, programmes: cap.programmes as CapData["programmes"] } });
 
 export const getCalculator = (): Envelope<CalculatorData> => {
   const list: CropAssumption[] = Object.entries(crops.crops).map(([id, c]) => ({ id: id as CropId, ...c }));
