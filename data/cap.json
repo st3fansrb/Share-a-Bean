@@ -1,0 +1,7 @@
+{
+  "_note": "Hand-curated CAP support table. Only values given by the team are filled in. Add the source link per row.",
+  "schemes": [
+    { "id": "coupled-protein", "label": "Coupled support, protein crops", "eurHa": 104, "appliesTo": "legume", "source": "TO ADD (CAP Strategic Plan, France)" },
+    { "id": "coupled-fodder-legume", "label": "Coupled support, fodder legumes", "eurHa": 150, "appliesTo": "fodder-legume", "source": "TO ADD (CAP Strategic Plan, France)" }
+  ]
+}

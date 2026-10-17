@@ -1,0 +1,11 @@
+{
+  "_note": "Synthetic demo farm. Not real data.",
+  "name": "Demo farm, Centre-Val de Loire",
+  "region": "Centre-Val de Loire",
+  "parcels": [
+    { "id": "A", "crop": "wheat", "area": 12.0 },
+    { "id": "B", "crop": "rapeseed", "area": 8.5 },
+    { "id": "C", "crop": "sunflower", "area": 6.0 },
+    { "id": "D", "crop": "wheat", "area": 9.5 }
+  ]
+}

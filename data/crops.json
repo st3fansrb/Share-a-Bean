@@ -1,0 +1,13 @@
+{
+  "_note": "PLACEHOLDER agronomic and cost assumptions for the draft. Every number must be replaced by a cited source (Eurostat apro_cpsh1, crop_full_framework.csv derived extract, advisory data) before the demo.",
+  "crops": {
+    "faba":      { "label": "Faba bean", "legume": true,  "yieldTHa": 4.0, "priceEurT": 340, "costEurHa": 175 },
+    "lupin":     { "label": "Lupin",     "legume": true,  "yieldTHa": 2.8, "priceEurT": 370, "costEurHa": 150 },
+    "pea":       { "label": "Field pea", "legume": true,  "yieldTHa": 3.8, "priceEurT": 250, "costEurHa": 160 },
+    "wheat":     { "label": "Wheat",     "legume": false, "yieldTHa": 7.0, "priceEurT": 210, "costEurHa": 780 },
+    "rapeseed":  { "label": "Rapeseed",  "legume": false, "yieldTHa": 3.4, "priceEurT": 470, "costEurHa": 830 },
+    "sunflower": { "label": "Sunflower", "legume": false, "yieldTHa": 2.6, "priceEurT": 430, "costEurHa": 560 }
+  },
+  "nitrogenCreditKgHa": 30,
+  "nitrogenEurKg": 1.0
+}

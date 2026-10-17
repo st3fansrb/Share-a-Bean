@@ -1,0 +1,8 @@
+{
+  "_note": "Synthetic buyer offers, modelled on spot, forward and cooperative contracts. Not real buyers.",
+  "offers": [
+    { "id": "o1", "buyer": "Buyer A", "type": "Food processor", "crop": "faba", "volumeT": [500, 2000], "priceEurT": [320, 360], "contract": "Forward", "delivery": "Aug to Oct", "distanceKm": 45 },
+    { "id": "o2", "buyer": "Buyer B", "type": "Feed company", "crop": "lupin", "volumeT": [1000, 3000], "priceEurT": [340, 400], "contract": "Fixed or formula", "delivery": "Aug to Sep", "distanceKm": 30 },
+    { "id": "o3", "buyer": "Buyer C", "type": "Biogas plant", "crop": "pea", "volumeT": [300, 900], "priceEurT": [220, 280], "contract": "Framework", "delivery": "Jun to Oct", "distanceKm": 60 }
+  ]
+}
