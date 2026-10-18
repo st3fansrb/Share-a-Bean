@@ -1,4 +1,3 @@
-import Calculator from "./Calculator";
 import RegionalCalculator from "./RegionalCalculator";
 import { offerData } from "@/lib/data";
 import { CROPS, LEGS, type CropKey } from "@/lib/regional-calc";
@@ -20,8 +19,6 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ c
       <h1>Calculator <Synthetic>estimate</Synthetic></h1>
       <p className="lede">Would a legume beat your usual crop?</p>
       <RegionalCalculator prefill={prefill} />
-      <h2 style={{ marginTop: 40 }}>Try your own numbers</h2>
-      <Calculator initialCrop={q.crop} initialPrice={q.price ? +q.price : undefined} />
     </>
   );
 }
