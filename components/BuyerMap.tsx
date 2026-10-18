@@ -1,8 +1,8 @@
+"use client";
 import { offerData, cropLabel } from "@/lib/data";
+import type { Offer } from "@/lib/contracts";
+import offers from "@/data/offers.json";
 
-// Schematic map, not geography: the farm in the centre, buyers placed by their distance.
-const RADIUS_KM = 85;
-const ANGLE: Record<string, number> = { o1: -35, o2: 200, o3: 115, o4: 150, o5: 20, o6: -80, o7: 245, o8: 70, o9: -150, o10: -10 };
 export const TYPE_COLOR: Record<string, string> = {
   "Food processor": "#2f6a49",
   "Feed company": "#3e6a8a",
@@ -11,51 +11,80 @@ export const TYPE_COLOR: Record<string, string> = {
   "Trader": "#8a4a3a",
 };
 
-export function BuyerMap() {
-  const c = 170, scale = 150 / RADIUS_KM;
+// Map of north-west France (simplified outline, real town positions). Equirectangular, scaled at 48° N.
+const LON0 = -3.4, LON1 = 5.4, LAT0 = 45.7, LAT1 = 50.3;
+const K = 105; // px per degree of latitude
+const W = (LON1 - LON0) * Math.cos((48 * Math.PI) / 180) * K;
+const H = (LAT1 - LAT0) * K;
+const px = (lon: number, lat: number): [number, number] => [(lon - LON0) * Math.cos((48 * Math.PI) / 180) * K, (LAT1 - lat) * K];
+const path = (pts: [number, number][], close = false) =>
+  pts.map(([lo, la], i) => `${i ? "L" : "M"}${px(lo, la).map((v) => v.toFixed(1)).join(" ")}`).join(" ") + (close ? " Z" : "");
+
+const FRANCE: [number, number][] = [
+  [2.55, 51.08], [1.6, 50.95], [1.55, 50.2], [1.1, 49.95], [0.1, 49.5], [-0.3, 49.3], [-1.2, 49.4], [-1.25, 49.7], [-1.85, 49.65],
+  [-1.6, 48.7], [-2.4, 48.65], [-3.2, 48.85], [-3.6, 48.7], [-4.7, 48.55], [-4.3, 48.0], [-3.2, 47.75], [-2.4, 47.4], [-2.1, 47.1],
+  [-1.9, 46.7], [-1.2, 46.2], [-1.15, 45.6], [-1.15, 44.5], [-1.3, 43.4], [2, 43.2], [6, 43.2], [7.2, 44.2], [6.9, 45.5], [6.0, 46.2],
+  [6.8, 47.0], [7.6, 47.6], [7.6, 48.9], [6.2, 49.5], [5.0, 49.6], [4.2, 49.95], [3.6, 50.4],
+];
+const LOIRE: [number, number][] = [[3.16, 46.99], [2.4, 47.35], [1.91, 47.9], [1.33, 47.55], [0.69, 47.39], [-0.1, 47.4], [-0.55, 47.47], [-1.55, 47.22]];
+const SEINE: [number, number][] = [[4.07, 48.3], [3.0, 48.4], [2.35, 48.86], [1.5, 49.1], [1.1, 49.44], [0.1, 49.49]];
+const PARIS: [number, number] = [2.35, 48.86];
+
+type Props = { selected?: string | null; onSelect?: (id: string | null) => void; visible?: string[] };
+
+export function BuyerMap({ selected = null, onSelect, visible }: Props) {
+  const farm = offers.farm;
+  const [fx, fy] = px(farm.lon, farm.lat);
+  const list = (offerData as Offer[]).filter((o) => !visible || visible.includes(o.id));
+  const sel = list.find((o) => o.id === selected);
+  const [px0, py0] = px(PARIS[0], PARIS[1]);
   return (
-    <svg viewBox="0 0 340 340" className="buyermap" role="img" aria-label="Schematic map of buyers around your farm">
-      <defs>
-        <radialGradient id="land" cx="50%" cy="50%" r="60%">
-          <stop offset="0%" stopColor="#efe8d7" />
-          <stop offset="100%" stopColor="#e3dbc6" />
-        </radialGradient>
-      </defs>
-      <rect width="340" height="340" rx="12" fill="url(#land)" />
-      {/* contour lines */}
-      {[0, 1, 2, 3, 4, 5].map((i) => (
-        <path key={i} d={`M -10 ${60 + i * 48} C 80 ${30 + i * 52}, 160 ${110 + i * 40}, 350 ${50 + i * 50}`} fill="none" stroke="#cfc4aa" strokeWidth="0.8" opacity="0.7" />
-      ))}
-      {/* river */}
-      <path d="M -10 230 C 60 210, 110 250, 170 228 S 280 180, 350 196" fill="none" stroke="#a9c1cc" strokeWidth="5" strokeLinecap="round" opacity="0.8" />
-      {/* distance rings */}
-      {[30, 60].map((km) => (
+    <svg viewBox={`0 0 ${W.toFixed(0)} ${H.toFixed(0)}`} className="buyermap" style={{ width: "100%", height: "auto", display: "block", borderRadius: 12, border: "1px solid var(--line)" }} role="img" aria-label="Map of buyers around your farm in Centre-Val de Loire">
+      <rect width={W} height={H} fill="#dde6e3" />
+      <path d={path(FRANCE, true)} fill="#efe8d7" stroke="#cfc4aa" strokeWidth="1.2" />
+      <path d={path(LOIRE)} fill="none" stroke="#a9c1cc" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={path(SEINE)} fill="none" stroke="#a9c1cc" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+      {[100, 200].map((km) => (
         <g key={km}>
-          <circle cx={c} cy={c} r={km * scale} fill="none" stroke="#14261c" strokeOpacity="0.25" strokeDasharray="3 5" />
-          <text x={c + 4} y={c - km * scale - 5} fontSize="10" fill="#6f7568" letterSpacing="0.08em">{km} KM</text>
+          <circle cx={fx} cy={fy} r={(km / 111) * K} fill="none" stroke="#14261c" strokeOpacity="0.22" strokeDasharray="3 6" />
+          <text x={fx + 4} y={fy - (km / 111) * K - 5} fontSize="11" fill="#6f7568" letterSpacing="0.08em">{km} KM</text>
         </g>
       ))}
-      {/* buyers */}
-      {offerData.map((o) => {
-        const a = (ANGLE[o.id] ?? 0) * (Math.PI / 180);
-        const x = c + Math.cos(a) * o.distanceKm * scale;
-        const y = c + Math.sin(a) * o.distanceKm * scale;
-        const col = TYPE_COLOR[o.type] ?? "#14261c";
+      <circle cx={px0} cy={py0} r="3" fill="#9a9a8a" />
+      <text x={px0 + 7} y={py0 + 4} fontSize="11" fill="#8a8a7a">Paris</text>
+
+      {sel && (() => {
+        const p = sel.partner;
+        const [x1, y1] = px(sel.lon, sel.lat), [x2, y2] = px(p.lon, p.lat);
         return (
-          <g key={o.id}>
-            <line x1={c} y1={c} x2={x} y2={y} stroke={col} strokeOpacity="0.35" strokeWidth="1" />
-            <circle cx={x} cy={y} r="13" fill={col} fillOpacity="0.15" />
-            <circle cx={x} cy={y} r="6.5" fill={col} stroke="#fbf9f4" strokeWidth="2" />
-            <text x={x} y={y + 24} fontSize="11" fontWeight="600" textAnchor="middle" fill="#14261c">{o.buyer}</text>
-            <text x={x} y={y + 37} fontSize="10" textAnchor="middle" fill="#6f7568">{cropLabel(o.crop)}, {o.distanceKm} km</text>
+          <g>
+            <path d={`M${fx} ${fy} L${x2} ${y2}`} stroke="#b8761f" strokeWidth="1.6" strokeDasharray="4 4" fill="none" />
+            <rect x={x2 - 6} y={y2 - 6} width="12" height="12" fill="#b8761f" stroke="#fbf9f4" strokeWidth="2" />
+            <text x={x2 + 11} y={y2 + 4} fontSize="12" fontWeight="600" fill="#8a5a14">{p.buyer}, {p.town}</text>
+            <path d={`M${fx} ${fy} L${x1} ${y1}`} stroke={TYPE_COLOR[sel.type]} strokeWidth="1.8" fill="none" />
+          </g>
+        );
+      })()}
+
+      {list.map((o) => {
+        const [x, y] = px(o.lon, o.lat);
+        const col = TYPE_COLOR[o.type] ?? "#14261c";
+        const on = o.id === selected;
+        const left = o.lon < farm.lon;
+        return (
+          <g key={o.id} style={{ cursor: onSelect ? "pointer" : "default" }} onClick={() => onSelect?.(on ? null : o.id)}>
+            <circle cx={x} cy={y} r={on ? 17 : 13} fill={col} fillOpacity={on ? 0.25 : 0.15} />
+            <circle cx={x} cy={y} r="7" fill={col} stroke="#fbf9f4" strokeWidth="2" />
+            <text x={left ? x - 13 : x + 13} y={y - 3} textAnchor={left ? "end" : "start"} fontSize="12" fontWeight="700" fill="#14261c">{o.buyer}</text>
+            <text x={left ? x - 13 : x + 13} y={y + 11} textAnchor={left ? "end" : "start"} fontSize="11" fill="#6f7568">{o.town} · {cropLabel(o.crop)}</text>
           </g>
         );
       })}
-      {/* farm */}
+
       <g>
-        <circle cx={c} cy={c} r="16" fill="#1e4a32" />
-        <path d={`M ${c - 7} ${c + 4} L ${c} ${c - 6} L ${c + 7} ${c + 4} Z`} fill="#f4f0e6" />
-        <text x={c} y={c + 32} fontSize="11" fontWeight="700" textAnchor="middle" fill="#1e4a32" letterSpacing="0.06em">YOUR FARM</text>
+        <circle cx={fx} cy={fy} r="15" fill="#1e4a32" />
+        <path d={`M ${fx - 7} ${fy + 4} L ${fx} ${fy - 6} L ${fx + 7} ${fy + 4} Z`} fill="#f4f0e6" />
+        <text x={fx} y={fy + 32} fontSize="11" fontWeight="700" textAnchor="middle" fill="#1e4a32" letterSpacing="0.06em">YOUR FARM</text>
       </g>
     </svg>
   );

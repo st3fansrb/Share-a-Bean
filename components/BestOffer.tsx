@@ -8,19 +8,22 @@ export function BestOffer() {
   const best = rankedForDemoFarm()[0];
   if (!best) return null;
   const o = best.offer;
-  const gain = Math.round(best.gainEurHa);
+  const p = o.partner;
+  const gain = Math.round(best.packageGainEurHa);
+  const full = best.coveredYears >= 3;
   return (
     <div className="card best" style={{ marginBottom: 16 }}>
-      <div className="eyebrow">Best buyer for you</div>
-      <h2>{o.buyer}: {cropLabel(o.crop)}, {o.contract.toLowerCase()} contract</h2>
-      <div className="gain">{gain >= 0 ? "+" : ""}{gain} €/ha <span className="muted" style={{ fontSize: 14 }}>vs. your crops now</span></div>
+      <div className="eyebrow">Our pick for your farm <span className="ai-tag">AI</span></div>
+      <h2>Sell your {cropLabel(o.crop).toLowerCase()} to {o.buyer} and your {p.crops.map((c) => cropLabel(c).toLowerCase()).join(" and ")} to {p.buyer}</h2>
+      <div className="gain">{gain >= 0 ? "+" : ""}{gain} €/ha <span className="muted" style={{ fontSize: 14 }}>a year, compared with your crops now</span></div>
       <ul>
-        {[best.reasons[0], best.cautions[0]].filter(Boolean).map((r) => r as string).map((r) => <li key={r}>{r}</li>)}
+        <li>{full ? "Both buyers are signed for the full 3-year rotation." : `Both buyers cover ${best.coveredYears} of your 3 rotation years.`}</li>
+        <li>{o.town === p.town ? `Both are in ${o.town}, ${o.distanceKm} km away.` : `${o.town} is ${o.distanceKm} km away; ${p.town} is ${p.distanceKm} km.`}</li>
       </ul>
       <div className="actions">
         <Link className="btn" href={`/calculator?offer=${o.id}&crop=${o.crop}&price=${Math.round(best.netPriceEurT)}`}>What would I earn?</Link>
+        <ExplainOffer offerId={o.id} label="Explain in plain words" />
       </div>
-      <ExplainOffer offerId={o.id} label="Explain" />
     </div>
   );
 }

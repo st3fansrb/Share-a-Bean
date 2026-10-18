@@ -8,15 +8,16 @@ type Ranked = ReturnType<typeof rankedForDemoFarm>[number];
 // Server-side facts: the model only sees numbers we computed, never client claims.
 function offerFacts(r: Ranked) {
   const o = r.offer;
-  return `Offer ${o.buyer} (${o.type}), ${o.crop}, ${o.priceEurT[0]}-${o.priceEurT[1]} EUR/t, ${o.volumeT[0]}-${o.volumeT[1]} t, ${o.contract} contract, ${o.distanceKm} km. ` +
+  return `Offer ${o.buyer} (${o.type}), ${o.crop}, ${o.priceEurT[0]}-${o.priceEurT[1]} EUR/t, ${o.volumeT[0]}-${o.volumeT[1]} t, ${o.contract} contract for ${o.years} year(s), ${o.town}, ${o.distanceKm} km. Paired with ${o.partner.buyer} (${o.partner.town}) for ${o.partner.crops.join(" and ")}. ` +
+    `Package over a 3-year rotation: ${Math.round(r.packageEurHa)} EUR/ha a year, ${Math.round(r.packageGainEurHa)} EUR/ha versus now, covering ${r.coveredYears} of 3 years. ` +
     `Rank ${r.rank} for this farm. Estimated margin ${Math.round(r.marginEurHa)} EUR/ha, ${Math.round(r.gainEurHa)} EUR/ha versus the farm's current crops. ` +
     `Reasons: ${r.reasons.join(" ")} ${r.cautions.length ? "Cautions: " + r.cautions.join(" ") : ""}`;
 }
 
 function rulesOfferText(r: Ranked) {
-  const cmp = r.gainEurHa >= 0
-    ? `about ${Math.round(r.gainEurHa)} € more per hectare than what you grow now`
-    : `about ${Math.round(-r.gainEurHa)} € less per hectare than what you grow now`;
+  const cmp = r.packageGainEurHa >= 0
+    ? `about ${Math.round(r.packageGainEurHa)} € more per hectare each year than what you grow now`
+    : `about ${Math.round(-r.packageGainEurHa)} € less per hectare each year than what you grow now`;
   return `${r.offer.buyer} would pay roughly ${Math.round(r.netPriceEurT)} €/t after transport, ${cmp}. ${r.cautions[0] ?? ""}`.trim();
 }
 
