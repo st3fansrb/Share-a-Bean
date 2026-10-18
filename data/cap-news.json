@@ -1,0 +1,7 @@
+{
+  "note": "Hand-written from the fact check; update when 2026 rates are confirmed. Not a live feed.",
+  "items": [
+    { "id": "coupled-share", "title": "More money goes to protein crops", "text": "France raises the share of CAP payments tied to protein crops from 2.3% in 2023 to 3.5% in 2027.", "status": "from CAP plan" },
+    { "id": "rate-2026", "title": "2026 rates not confirmed yet", "text": "The legume payment we show (about €104 per hectare) comes from the 2022 plan. Check TelePAC for the 2026 rate.", "status": "to confirm" }
+  ]
+}

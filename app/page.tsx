@@ -2,6 +2,7 @@ import Link from "next/link";
 import { icons } from "@/components/Icons";
 import { Synthetic } from "@/components/Tag";
 import { farmData, offerData } from "@/lib/data";
+import capNews from "@/data/cap-news.json";
 import "./home.css";
 
 const steps = [
@@ -32,6 +33,22 @@ export default function Home() {
           <div><dd>3</dd><dt>legumes: faba bean, pea, lupin</dt></div>
           <div><dd>{farmData.parcels.length}</dd><dt>fields in the demo farm</dt></div>
         </dl>
+      </section>
+
+      <section className="reveal d2 news" aria-label="Latest on CAP support">
+        <h2 className="sec">Latest on CAP support</h2>
+        <ul className="newslist">
+          {capNews.items.map((n) => (
+            <li key={n.id} className="card">
+              <span className="dot" aria-hidden />
+              <div>
+                <b>{n.title}</b> <Synthetic>{n.status}</Synthetic>
+                <p>{n.text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <Link className="link" href="/cap">All CAP support {icons.arrow}</Link>
       </section>
 
       <section className="reveal d2">
