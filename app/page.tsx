@@ -1,94 +1,76 @@
 import Link from "next/link";
 import { icons } from "@/components/Icons";
 import { Synthetic } from "@/components/Tag";
-import { farmData, offerData } from "@/lib/data";
+import { offerData, cropData, capSchemes } from "@/lib/data";
+import { marginPerHa } from "@/lib/calc";
 import capNews from "@/data/cap-news.json";
 import "./home.css";
 
-const steps = [
-  { n: "1", title: "Know the buyer", text: "See who near you wants faba bean, pea or lupin, how much, at what price and for how long. Open a buyer to see the offer.", href: "/opportunities", cta: "See buyers" },
-  { n: "2", title: "Know the money", text: "Compare legumes with wheat, rapeseed and sunflower per hectare. EU support and the nitrogen legumes leave for the next crop are included.", href: "/calculator", cta: "Check my margin" },
-  { n: "3", title: "Keep your data", text: "Add your fields. You choose which ones a buyer sees, and you can take it back at any time.", href: "/farm", cta: "Open my farm" },
-];
+type Id = keyof typeof cropData;
+const coupled = capSchemes.find((s) => s.id === "coupled-protein")?.eurHa ?? 0;
+const margin = (id: Id) => marginPerHa({ ...cropData[id], supportEurHa: cropData[id].legume ? coupled : 0 });
+const eur = (n: number) => Math.round(n).toLocaleString("en-GB");
 
-const more = [
-  { href: "/cap", label: "CAP support", text: "What the EU pays for legumes" },
-  { href: "/insights", label: "Market insights", text: "Prices and yields in France" },
-  { href: "/knowledge", label: "Farmer advice", text: "Tips from other farmers" },
+const steps = [
+  { n: "1", title: "Know the buyer", text: "Who near you wants faba bean, pea or lupin, and at what price.", href: "/opportunities", cta: "See buyers" },
+  { n: "2", title: "Know the money", text: "Legumes against wheat, per hectare, with EU support.", href: "/calculator", cta: "Check my margin" },
+  { n: "3", title: "Keep your data", text: "You choose what a buyer sees. Take it back any time.", href: "/farm", cta: "Open my farm" },
 ];
 
 export default function Home() {
+  const ids = Object.keys(cropData) as Id[];
+  const rows = ids.map((id) => ({ id, m: margin(id) })).sort((a, b) => b.m - a.m);
+  const max = Math.max(...rows.map((r) => r.m));
   return (
     <div className="home">
-      <section className="entrance reveal d1">
-        <div className="eyebrow">Share-a-Bean · France demo</div>
-        <h1>Know before <em>you sow.</em></h1>
-        <p className="lede">Farmers want to grow faba bean, field pea and lupin but often do not know who will buy them or if they pay. Buyers want regional supply but cannot find it. Share-a-Bean puts both on one page.</p>
-        <div className="actions">
-          <Link className="btn" href="/opportunities">See buyers {icons.arrow}</Link>
-          <Link className="btn ghost" href="/calculator">Check my margin</Link>
+      <section className="hero reveal d1">
+        <div className="herotext">
+          <div className="eyebrow">Share-a-Bean · France demo</div>
+          <h1>Know before <em>you sow.</em></h1>
+          <p className="lede">Farmers want to grow beans, peas and lupin but do not know who will buy them. Buyers cannot find regional supply. We put both on one page.</p>
+          <div className="actions">
+            <Link className="btn" href="/opportunities">See buyers {icons.arrow}</Link>
+            <Link className="btn ghost" href="/calculator">Check my margin</Link>
+          </div>
+          <div className="pills"><span>For farmers</span><span>For buyers</span><span>{offerData.length} demo buyer offers</span></div>
         </div>
-        <dl className="facts">
-          <div><dd>{offerData.length}</dd><dt>buyer offers <Synthetic>demo</Synthetic></dt></div>
-          <div><dd>3</dd><dt>legumes: faba bean, pea, lupin</dt></div>
-          <div><dd>{farmData.parcels.length}</dd><dt>fields in the demo farm</dt></div>
-        </dl>
+        <div className="chart card">
+          <div className="charthead">
+            <h2>Profit per hectare</h2>
+            <Synthetic>estimate</Synthetic>
+          </div>
+          <div className="hbars">
+            {rows.map(({ id, m }) => (
+              <div key={id} className={cropData[id].legume ? "hb legume" : "hb"}>
+                <span className="hl">{cropData[id].label}</span>
+                <span className="track"><span className="fill" style={{ width: `${Math.max(4, (m / max) * 100)}%` }} /></span>
+                <span className="hv">€{eur(m)}</span>
+              </div>
+            ))}
+          </div>
+          <p className="note"><i /> Legumes, with CAP support</p>
+        </div>
       </section>
 
-      <section className="reveal d2 news" aria-label="Latest on CAP support">
-        <h2 className="sec">Latest on CAP support</h2>
-        <ul className="newslist">
+      <ol className="steps reveal d2">
+        {steps.map((s) => (
+          <li key={s.n} className="card step">
+            <span className="num">{s.n}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <Link className="link" href={s.href}>{s.cta} {icons.arrow}</Link>
+          </li>
+        ))}
+      </ol>
+
+      <section className="news reveal d3" aria-label="Latest on CAP support">
+        <h2>Latest on CAP support</h2>
+        <ul>
           {capNews.items.map((n) => (
-            <li key={n.id} className="card">
-              <span className="dot" aria-hidden />
-              <div>
-                <b>{n.title}</b> <Synthetic>{n.status}</Synthetic>
-                <p>{n.text}</p>
-              </div>
-            </li>
+            <li key={n.id}><span className="dot" aria-hidden /><b>{n.title}</b> <Synthetic>{n.status}</Synthetic></li>
           ))}
         </ul>
-        <Link className="link" href="/cap">All CAP support {icons.arrow}</Link>
-      </section>
-
-      <section className="reveal d2">
-        <h2 className="sec">Who it is for</h2>
-        <div className="who2">
-          <div className="card">
-            <h3>Farmers</h3>
-            <p>Thinking about legumes but unsure who will buy them, or if they pay.</p>
-          </div>
-          <div className="card">
-            <h3>Buyers</h3>
-            <p>Mills, feed makers and biogas plants that need steady legume supply nearby.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="reveal d3">
-        <h2 className="sec">How it helps</h2>
-        <ol className="steps">
-          {steps.map((s) => (
-            <li key={s.n} className="card step">
-              <span className="num">{s.n}</span>
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
-              <Link className="link" href={s.href}>{s.cta} {icons.arrow}</Link>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="reveal d4">
-        <h2 className="sec">Also here</h2>
-        <div className="more">
-          {more.map((m) => (
-            <Link key={m.href} href={m.href} className="card morelink">
-              <b>{m.label}</b>
-              <span className="muted">{m.text}</span>
-            </Link>
-          ))}
-        </div>
+        <Link className="link" href="/cap">Read more {icons.arrow}</Link>
       </section>
     </div>
   );
