@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { icons } from "@/components/Icons";
+import { Synthetic } from "@/components/Tag";
+import { farmData, offerData } from "@/lib/data";
 import "./home.css";
 
 const steps = [
-  { n: "1", title: "Know the buyer", text: "See who near you wants beans, peas or lupin, and at what price.", href: "/opportunities", cta: "See buyers" },
-  { n: "2", title: "Know the money", text: "Compare legumes with wheat per hectare, support included.", href: "/calculator", cta: "Check my margin" },
-  { n: "3", title: "Keep your data", text: "Add your fields. You choose what a buyer sees, and you can take it back.", href: "/farm", cta: "Open my farm" },
+  { n: "1", title: "Know the buyer", text: "See who near you wants faba bean, pea or lupin, how much, at what price and for how long. Open a buyer to see the offer.", href: "/opportunities", cta: "See buyers" },
+  { n: "2", title: "Know the money", text: "Compare legumes with wheat, rapeseed and sunflower per hectare. EU support and the nitrogen legumes leave for the next crop are included.", href: "/calculator", cta: "Check my margin" },
+  { n: "3", title: "Keep your data", text: "Add your fields. You choose which ones a buyer sees, and you can take it back at any time.", href: "/farm", cta: "Open my farm" },
 ];
 
 const more = [
@@ -20,11 +22,16 @@ export default function Home() {
       <section className="entrance reveal d1">
         <div className="eyebrow">Share-a-Bean · France demo</div>
         <h1>Know before <em>you sow.</em></h1>
-        <p className="lede">Share-a-Bean connects farmers who want to grow faba bean, field pea or lupin with buyers who need them.</p>
+        <p className="lede">Farmers want to grow faba bean, field pea and lupin but often do not know who will buy them or if they pay. Buyers want regional supply but cannot find it. Share-a-Bean puts both on one page.</p>
         <div className="actions">
           <Link className="btn" href="/opportunities">See buyers {icons.arrow}</Link>
           <Link className="btn ghost" href="/calculator">Check my margin</Link>
         </div>
+        <dl className="facts">
+          <div><dd>{offerData.length}</dd><dt>buyer offers <Synthetic>demo</Synthetic></dt></div>
+          <div><dd>3</dd><dt>legumes: faba bean, pea, lupin</dt></div>
+          <div><dd>{farmData.parcels.length}</dd><dt>fields in the demo farm</dt></div>
+        </dl>
       </section>
 
       <section className="reveal d2">
