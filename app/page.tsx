@@ -54,11 +54,13 @@ export default function Home() {
 
       <ol className="steps reveal d2">
         {steps.map((s) => (
-          <li key={s.n} className="card step">
-            <span className="num">{s.n}</span>
-            <h3>{s.title}</h3>
-            <p>{s.text}</p>
-            <Link className="link" href={s.href}>{s.cta} {icons.arrow}</Link>
+          <li key={s.n}>
+            <Link href={s.href} className="card step">
+              <span className="num">{s.n}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+              <span className="link">{s.cta} {icons.arrow}</span>
+            </Link>
           </li>
         ))}
       </ol>
