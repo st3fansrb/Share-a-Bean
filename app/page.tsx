@@ -1,112 +1,71 @@
 import Link from "next/link";
-import { farmData, offerData, cropData, capSchemes, cropLabel } from "@/lib/data";
-import { marginPerHa } from "@/lib/calc";
-import { Synthetic } from "@/components/Tag";
-import { BuyerMap, TYPE_COLOR } from "@/components/BuyerMap";
 import { icons } from "@/components/Icons";
 import "./home.css";
 
-type Id = keyof typeof cropData;
-const coupled = capSchemes.find((s) => s.id === "coupled-protein")?.eurHa ?? 0;
-const support = (id: Id) => (cropData[id].legume ? coupled : 0);
-const margin = (id: Id) => marginPerHa({ ...cropData[id], supportEurHa: support(id) });
-const eur = (n: number) => Math.round(n).toLocaleString("en-GB");
+const steps = [
+  { n: "1", title: "Know the buyer", text: "See who near you wants beans, peas or lupin, and at what price.", href: "/opportunities", cta: "See buyers" },
+  { n: "2", title: "Know the money", text: "Compare legumes with wheat per hectare, support included.", href: "/calculator", cta: "Check my margin" },
+  { n: "3", title: "Keep your data", text: "Add your fields. You choose what a buyer sees, and you can take it back.", href: "/farm", cta: "Open my farm" },
+];
+
+const more = [
+  { href: "/cap", label: "CAP support", text: "What the EU pays for legumes" },
+  { href: "/insights", label: "Market insights", text: "Prices and yields in France" },
+  { href: "/knowledge", label: "Farmer advice", text: "Tips from other farmers" },
+];
 
 export default function Home() {
-  const area = farmData.parcels.reduce((s, p) => s + p.area, 0);
-  const ids = Object.keys(cropData) as Id[];
-  const margins = ids.map((id) => ({ id, m: margin(id) })).sort((a, b) => b.m - a.m);
-  const max = Math.max(...margins.map((x) => x.m));
-  const gap = margin("faba") - margin("wheat");
   return (
     <div className="home">
-      <header className="topbar reveal d1">
-        <span className="place">{icons.pin} {farmData.region}, France</span>
-        <span className="avatar" title={farmData.name}>DF</span>
-      </header>
-
-      <section className="hero reveal d2">
-        <div>
-          <div className="eyebrow">Season 2027</div>
-          <h1>Will legumes pay <em>on your farm?</em></h1>
-          <p className="lede">Find buyers near you and see what you would earn per hectare.</p>
-          <div className="actions">
-            <Link className="btn" href="/opportunities">See buyers {icons.arrow}</Link>
-            <Link className="btn ghost" href="/calculator">Check my margin</Link>
-          </div>
-        </div>
-        <dl className="ledger">
-          <div><dt>Buyers within 60 km</dt><dd>{offerData.filter((o) => o.distanceKm <= 60).length}</dd><span>legume offers</span></div>
-          <div><dt>Faba bean vs wheat</dt><dd className="pos">+{eur(gap)} <small>€/ha</small></dd><span>per hectare, with CAP support</span></div>
-          <div><dt>Your farm</dt><dd>{area} <small>ha</small></dd><span>{farmData.parcels.length} parcels, {farmData.parcels.filter((p) => cropData[p.crop as Id].legume).length} with legumes</span></div>
-        </dl>
-      </section>
-
-      <section className="card opps reveal d3">
-        <div className="cardhead">
-          <div><h2>Buyers near you <Synthetic>demo</Synthetic></h2></div>
-          <Link className="link" href="/opportunities">See all {offerData.length} {icons.arrow}</Link>
-        </div>
-        <div className="opps-body">
-          <div className="mapwrap">
-            <BuyerMap />
-            <ul className="legend">
-              {Object.entries(TYPE_COLOR).map(([t, c]) => <li key={t}><i style={{ background: c }} />{t}</li>)}
-            </ul>
-          </div>
-          <ol className="offers">
-            {offerData.slice(0, 5).map((o) => (
-              <li key={o.id}>
-                <Link href={`/calculator?offer=${o.id}&crop=${o.crop}&price=${Math.round((o.priceEurT[0] + o.priceEurT[1]) / 2)}`} style={{ borderLeftColor: TYPE_COLOR[o.type] }}>
-                  <span className="swatch" style={{ background: TYPE_COLOR[o.type] }} />
-                  <div className="who">
-                    <h3>{o.buyer} <span className="chip legume">{cropLabel(o.crop)}</span></h3>
-                    <span className="muted">{o.distanceKm} km away</span>
-                  </div>
-                  <div className="fact"><span>Volume</span>{eur(o.volumeT[0])}–{eur(o.volumeT[1])} t</div>
-                  <div className="fact"><span>Price</span>€{o.priceEurT[0]}–{o.priceEurT[1]}/t</div>
-                  <div className="fact"><span>Contract</span>{o.contract}</div>
-                  <span className="go">{icons.arrow}</span>
-                </Link>
-              </li>
-            ))}
-          </ol>
+      <section className="entrance reveal d1">
+        <div className="eyebrow">Share-a-Bean · France demo</div>
+        <h1>Know before <em>you sow.</em></h1>
+        <p className="lede">Share-a-Bean connects farmers who want to grow faba bean, field pea or lupin with buyers who need them.</p>
+        <div className="actions">
+          <Link className="btn" href="/opportunities">See buyers {icons.arrow}</Link>
+          <Link className="btn ghost" href="/calculator">Check my margin</Link>
         </div>
       </section>
 
-      <div className="trio">
-        <section className="card reveal d4">
-          <div className="cardhead">
-            <div><h2>Profit per hectare <Synthetic>estimate</Synthetic></h2></div>
+      <section className="reveal d2">
+        <h2 className="sec">Who it is for</h2>
+        <div className="who2">
+          <div className="card">
+            <h3>Farmers</h3>
+            <p>Thinking about legumes but unsure who will buy them, or if they pay.</p>
           </div>
-          <div className="hbars">
-            {margins.map(({ id, m }) => (
-              <div key={id} className={cropData[id].legume ? "hb legume" : "hb"}>
-                <span className="hl">{cropData[id].label}</span>
-                <span className="track"><span className="fill" style={{ width: `${(m / max) * 100}%` }} /></span>
-                <span className="hv">€{eur(m)}</span>
-              </div>
-            ))}
+          <div className="card">
+            <h3>Buyers</h3>
+            <p>Mills, feed makers and biogas plants that need steady legume supply nearby.</p>
           </div>
-          <p className="note">Legumes in ochre.</p>
-        </section>
+        </div>
+      </section>
 
-        <section className="card reveal d5">
-          <div className="cardhead">
-            <div><h2>CAP support for legumes</h2></div>
-          </div>
-          <ul className="schemes">
-            {capSchemes.map((s) => (
-              <li key={s.id}>
-                <span className="tick">✓</span>
-                <div><b>{s.label}</b></div>
-                <span className="amt">€{s.eurHa}<small>/ha</small></span>
-              </li>
-            ))}
-          </ul>
-          <Link className="link" href="/cap">Details {icons.arrow}</Link>
-        </section>
-      </div>
+      <section className="reveal d3">
+        <h2 className="sec">How it helps</h2>
+        <ol className="steps">
+          {steps.map((s) => (
+            <li key={s.n} className="card step">
+              <span className="num">{s.n}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+              <Link className="link" href={s.href}>{s.cta} {icons.arrow}</Link>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="reveal d4">
+        <h2 className="sec">Also here</h2>
+        <div className="more">
+          {more.map((m) => (
+            <Link key={m.href} href={m.href} className="card morelink">
+              <b>{m.label}</b>
+              <span className="muted">{m.text}</span>
+            </Link>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
