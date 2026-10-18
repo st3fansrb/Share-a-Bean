@@ -9,8 +9,8 @@ import { ZoomableSvg, type View } from "@/components/ZoomableSvg";
 import { useParcels } from "@/lib/useParcels";
 import { cropLabel } from "@/lib/data";
 import {
-  CAP, CNAME, COMPS, CROPS, D, LEGS, calc, capOf, eur, fmt, initialState, legumeArea, nP, sgn, val,
-  type CalcState, type CropKey, type Field,
+  CAP, CNAME, COMPS, CROPS, D, LEGS, calc, eur, fmt, initialState, legumeArea, nP, sgn,
+  type CalcState, type CropKey,
 } from "@/lib/regional-calc";
 
 type Props = { id: string; n: string };
@@ -112,39 +112,6 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
   const maxPart = Math.max(50, ...res.parts.map((p) => Math.abs(p[1])));
   const selected = paths.find((p) => p.id === rid);
 
-  const setField = (crop: string, f: string, raw: string) => {
-    const k = `${crop}.${f}`, v = num(raw), regionBound = f === "y" || f === "p";
-    const key = regionBound ? "rov" : "ov", next = { ...st[key] };
-    if (v == null) delete next[k]; else next[k] = v;
-    set({ [key]: next });
-  };
-  const cell = (crop: CropKey | "N", f: string, step: number) => {
-    const v = crop === "N" ? nP(st, rid) : val(st, crop, f as Field, rid);
-    return (
-      <>
-        <input className="rc-in num" type="number" step={step} value={Math.round(v.v * 100) / 100}
-          onChange={(e) => setField(crop, f, e.target.value)} aria-label={`${crop} ${f}`} />
-        <span className={`rc-src ${v.edited ? "edited" : ""}`}>{v.src}</span>
-      </>
-    );
-  };
-  const aRow = (lbl: string, f: Field, step: number, wheatToo = false) => (
-    <tr key={f}>
-      <td>{lbl}</td>
-      <td className="r">{cell(st.leg, f, step)}</td>
-      <td className="r">{cell(st.comp, f, step)}</td>
-      <td className="r">{wheatToo ? (st.comp !== "wheat" ? cell("wheat", f, step) : <span className="muted">same as left</span>) : null}</td>
-    </tr>
-  );
-  const capRow = (key: "biss" | "cg" | "eco", label: string, note: string, v: number, ovKey: "biss" | "cg" | "cf" | "eco" = key) => (
-    <label className="rc-chk">
-      <input type="checkbox" checked={st.cap[key]} onChange={(e) => set({ cap: { ...st.cap, [key]: e.target.checked } })} />
-      <span className="grow">{label}<small>{note}</small></span>
-      <input className="rc-in num" type="number" value={v} aria-label={`${label} rate`}
-        onChange={(e) => set({ capOv: { ...st.capOv, [`${cc}.${ovKey}`]: +e.target.value } })} />
-    </label>
-  );
-  const reset = () => set({ ov: {}, rov: {}, capOv: {}, cap: initialState.cap });
   const pick = (id: string) => { if (D.regions[id]) { setOffer(undefined); set({ region: id, rov: {} }); } };
 
   return (
@@ -297,37 +264,6 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
               <div><small>Fertiliser N in year 2</small><b className="num">{fmt(res.l2.n)} kg</b><small className="num">vs {fmt(res.c2.n)} kg · {fmt(res.c2.n - res.l2.n)} kg saved</small></div>
               <div><small>N price</small><b className="num">€{fmt(res.pn, 2)}/kg</b><small>{nP(st, rid).src}</small></div>
             </div>
-          </details>
-
-          <details className="card rc-sec">
-            <summary><span className="eyebrow">CAP payments</span></summary>
-                        {capRow("biss", "Basic income support", "Same on both crops.", cap.biss)}
-            {capRow("cg", "Protein crop support", L.forage ? "Fodder legume rate." : "Grain legume rate.", L.forage ? cap.cf : cap.cg, L.forage ? "cf" : "cg")}
-            {capRow("eco", "Eco-scheme", "Per ha of legume.", cap.eco)}
-            <label className="rc-chk">
-              <input type="checkbox" checked={st.cap.aecm} onChange={(e) => set({ cap: { ...st.cap, aecm: e.target.checked } })} />
-              <span className="grow">Agri-environment<small>Enter your own rate.</small></span>
-              <input className="rc-in num" type="number" value={st.cap.aecmVal || 0} aria-label="Agri-environment rate"
-                onChange={(e) => set({ cap: { ...st.cap, aecmVal: +e.target.value } })} />
-            </label>
-            <p className="note">Approximate rates from national CAP plans. Edit to match yours.</p>
-          </details>
-
-          <details className="card rc-sec" open={!!st.openA} onToggle={(e) => { const o = (e.currentTarget as HTMLDetailsElement).open; if (o !== !!st.openA) set({ openA: o }); }}>
-            <summary><span className="eyebrow">Change the numbers</span></summary>
-            <div className="rc-scroll">
-              <table className="rc-assump">
-                <thead><tr><th>Per hectare</th><th className="r">{L.label}</th><th className="r">{C.label}</th><th className="r">Wheat (yr 2–3)</th></tr></thead>
-                <tbody>
-                  {aRow("Yield, t", "y", 0.01, true)}{aRow("Price, €/t", "p", 1, true)}{aRow("Mineral N, kg", "n", 1, true)}{aRow("Other variable costs, €", "cost", 5, true)}
-                  <tr><td colSpan={4} className="eyebrow sub">Effect on following wheat</td></tr>
-                  {aRow("Yield change, %", "eff", 1)}{aRow("N credit, kg", "credit", 1)}{aRow("Pest/disease saving, €", "pest", 1)}{aRow("Year-3 residual yield, %", "resid", 1)}
-                  <tr><td>N fertiliser price, €/kg N</td><td className="r" colSpan={3}>{cell("N", "p", 0.01)}</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <button className="btn ghost" onClick={reset}>Reset</button>
-            <p className="note">Yields and prices: Eurostat averages. Costs and rotation effects are estimates.</p>
           </details>
         </div>
       </div>
