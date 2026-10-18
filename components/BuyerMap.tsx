@@ -2,6 +2,7 @@
 import { offerData, cropLabel } from "@/lib/data";
 import type { Offer } from "@/lib/contracts";
 import offers from "@/data/offers.json";
+import { ZoomableSvg } from "./ZoomableSvg";
 
 export const TYPE_COLOR: Record<string, string> = {
   "Food processor": "#2f6a49",
@@ -39,7 +40,7 @@ export function BuyerMap({ selected = null, onSelect, visible }: Props) {
   const sel = list.find((o) => o.id === selected);
   const [px0, py0] = px(PARIS[0], PARIS[1]);
   return (
-    <svg viewBox={`0 0 ${W.toFixed(0)} ${H.toFixed(0)}`} className="buyermap" style={{ width: "100%", height: "auto", display: "block", borderRadius: 12, border: "1px solid var(--line)" }} role="img" aria-label="Map of buyers around your farm in Centre-Val de Loire">
+    <ZoomableSvg w={W} h={H} label="Map of buyers around your farm in Centre-Val de Loire. Scroll or use the buttons to zoom, drag to move." className="buyermap" style={{ borderRadius: 12, border: "1px solid var(--line)", overflow: "hidden" }}>
       <rect width={W} height={H} fill="#dde6e3" />
       <path d={path(FRANCE, true)} fill="#efe8d7" stroke="#cfc4aa" strokeWidth="1.2" />
       <path d={path(LOIRE)} fill="none" stroke="#a9c1cc" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
@@ -86,6 +87,6 @@ export function BuyerMap({ selected = null, onSelect, visible }: Props) {
         <path d={`M ${fx - 7} ${fy + 4} L ${fx} ${fy - 6} L ${fx + 7} ${fy + 4} Z`} fill="#f4f0e6" />
         <text x={fx} y={fy + 32} fontSize="11" fontWeight="700" textAnchor="middle" fill="#1e4a32" letterSpacing="0.06em">YOUR FARM</text>
       </g>
-    </svg>
+    </ZoomableSvg>
   );
 }

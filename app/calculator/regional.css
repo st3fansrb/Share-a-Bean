@@ -15,7 +15,7 @@
 .rc-map { position: sticky; top: 16px; padding: 10px; overflow: hidden; }
 .rc-map svg { display: block; width: 100%; height: auto; max-height: calc(100vh - 150px); }
 .rc-hint { position: absolute; left: 20px; top: 8px; max-width: 280px; margin: 0; z-index: 1; }
-.reg { stroke: var(--panel); stroke-width: 0.5; cursor: pointer; transition: fill 0.25s; }
+.reg { vector-effect: non-scaling-stroke; stroke: var(--panel); stroke-width: 0.5; cursor: pointer; transition: fill 0.25s; }
 .reg:hover { stroke: var(--ink); stroke-width: 1.2; }
 .reg.sel { stroke: var(--ink); stroke-width: 2.2; }
 .rc-tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--paper); padding: 6px 10px; border-radius: 8px; font-size: 12px; line-height: 1.35; max-width: 240px; }

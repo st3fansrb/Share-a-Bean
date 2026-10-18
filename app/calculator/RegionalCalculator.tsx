@@ -5,6 +5,7 @@ import { feature } from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
 import topoRaw from "@/data/eurostat/nuts2.topo.json";
 import Link from "next/link";
+import { ZoomableSvg, type View } from "@/components/ZoomableSvg";
 import { useParcels } from "@/lib/useParcels";
 import { cropLabel } from "@/lib/data";
 import {
@@ -21,6 +22,19 @@ const paths = (() => {
   const gp = geoPath(proj);
   return feats.map((f) => ({ id: f.properties.id, name: f.properties.n, d: gp(f) ?? "" }));
 })();
+
+// Framing that makes metropolitan France fill the map (overseas regions left out).
+const FRANCE_VIEW: View = (() => {
+  const proj = geoAzimuthalEqualArea().rotate([-12, -52]).fitExtent([[8, 8], [W - 8, H - 8]], { type: "FeatureCollection", features: feats });
+  const gp = geoPath(proj);
+  const fr = feats.filter((f) => /^FR[^Y]/.test(f.properties.id));
+  const xs: number[] = [], ys: number[] = [];
+  for (const f of fr) { const [[x0, y0], [x1, y1]] = gp.bounds(f); xs.push(x0, x1); ys.push(y0, y1); }
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+  const k = Math.min((W - 40) / (x1 - x0), (H - 40) / (y1 - y0));
+  return { k, x: W / 2 - k * (x0 + x1) / 2, y: H / 2 - k * (y0 + y1) / 2 };
+})();
+const EU_VIEW: View = { k: 1, x: 0, y: 0 };
 
 // Diverging scale on the site palette: clay (legume loses) -> paper -> forest (legume wins).
 const lerp = (a: number[], b: number[], t: number) => a.map((x, i) => Math.round(x + (b[i] - x) * t));
@@ -177,8 +191,8 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
 
       <div className="rc-grid">
         <div className="card rc-map" onMouseLeave={() => setTip(null)}>
-          <p className="note rc-hint">{scope === "FR" ? "France regions focused. Tap a region to view." : "Tap an EU region. Green means legume earns more."}</p>
-          <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="EU NUTS 2 regions coloured by legume margin advantage">
+          <p className="note rc-hint">{scope === "FR" ? "France regions focused. Tap a region to view; scroll or use + / − to zoom." : "Tap an EU region; scroll or use + / − to zoom. Green means legume earns more."}</p>
+          <ZoomableSvg w={W} h={H} home={scope === "FR" ? FRANCE_VIEW : EU_VIEW} resetKey={scope} label="EU NUTS 2 regions coloured by legume margin advantage. Scroll or use the buttons to zoom, drag to move.">
             {paths.filter((p) => p.id !== rid).map((p) => {
               const isDimmed = scope === "FR" && !p.id.startsWith("FR");
               return (
@@ -188,7 +202,7 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
               );
             })}
             {selected && <path d={selected.d} className="reg sel" fill={colour(rid)} />}
-          </svg>
+          </ZoomableSvg>
           {tip && <div className="rc-tip" style={{ left: Math.min(tip.x + 14, 420), top: tip.y + 14 }}><b>{tip.name}</b> · {tip.id}<br />{tipText(tip.id)}</div>}
           <div className="rc-legend">
             {st.metric === "area" ? (

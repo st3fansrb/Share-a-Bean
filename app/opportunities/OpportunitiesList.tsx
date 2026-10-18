@@ -54,7 +54,7 @@ export default function OpportunitiesList({ packages }: { packages: Record<strin
           </div>
         </div>
 
-        <div style={{ marginTop: 16 }}>
+        <div style={{ marginTop: 16, maxWidth: 460 }}>
           <BuyerMap selected={selectedBuyer} onSelect={setSelectedBuyer} visible={filteredOffers.map((o) => o.id)} />
           <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap", fontSize: 12, marginTop: 8, color: "var(--text-soft)" }}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><span style={{ width: 10, height: 10, borderRadius: "50%", background: "var(--forest)" }} /> Legume buyer</span>
