@@ -4,7 +4,14 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
 export type View = { k: number; x: number; y: number };
 const MIN_K = 1, MAX_K = 8;
 
-// Pan and zoom for an SVG: wheel or pinch-free buttons, drag to pan. `home` is the framing the Reset button returns to.
+// Keep the content covering the frame, so the map cannot be dragged away or slide off vertically.
+const clamp = (v: View, w: number, h: number): View => ({
+  k: v.k,
+  x: Math.min(0, Math.max(w * (1 - v.k), v.x)),
+  y: Math.min(0, Math.max(h * (1 - v.k), v.y)),
+});
+
+// Pan and zoom for an SVG: wheel or buttons, drag to pan. `home` is the framing the Reset button returns to.
 export function ZoomableSvg({ w, h, home = { k: 1, x: 0, y: 0 }, resetKey, children, className, style, label }: {
   w: number; h: number; home?: View; resetKey?: string; children: ReactNode; className?: string; style?: React.CSSProperties; label: string;
 }) {
@@ -21,7 +28,7 @@ export function ZoomableSvg({ w, h, home = { k: 1, x: 0, y: 0 }, resetKey, child
     setV((o) => {
       const k = Math.min(MAX_K, Math.max(MIN_K, o.k * factor));
       const f = k / o.k;
-      return { k, x: cx - (cx - o.x) * f, y: cy - (cy - o.y) * f };
+      return clamp({ k, x: cx - (cx - o.x) * f, y: cy - (cy - o.y) * f }, w, h);
     });
   }, []);
 
@@ -54,7 +61,7 @@ export function ZoomableSvg({ w, h, home = { k: 1, x: 0, y: 0 }, resetKey, child
       d.moved = true;
       const r = ref.current!.getBoundingClientRect();
       d.x = m.clientX; d.y = m.clientY;
-      setV((o) => ({ ...o, x: o.x + (dx / r.width) * w, y: o.y + (dy / r.height) * h }));
+      setV((o) => clamp({ ...o, x: o.x + (dx / r.width) * w, y: o.y + (dy / r.height) * h }, w, h));
     };
     const up = () => {
       window.removeEventListener("pointermove", move);
