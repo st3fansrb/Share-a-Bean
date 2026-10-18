@@ -1,5 +1,5 @@
 {
-  "_note": "Synthetic buyers for the demo, not real companies. Buyer mix follows FranceAgriMer's protein-crop sheet 2026 (477 collectors: 117 cooperatives, 360 traders; outlets feed, human food, export; campaign July to June). Contract types spot/forward/cooperative as in the hackathon synthetic sales data; volume bands sized from aggregate lot-size statistics of that data (median lot 64 t, 90th percentile ~335 t). Price bands are indicative guesses, not market quotes. No dataset rows are copied.",
+  "_note": "Synthetic buyers for the demo, not real companies. Buyer mix follows FranceAgriMer's protein-crop sheet 2026 (477 collectors: 117 cooperatives, 360 traders; outlets feed, human food, export; campaign July to June). Contract types spot/forward/cooperative as in the hackathon synthetic sales data; volume bands sized from aggregate lot-size statistics of that data (median lot 64 t, 90th percentile ~335 t). Price bands are indicative guesses, not market quotes. No dataset rows are copied. Towns are real places but buyers are fictional; distances are straight-line from a demo farm near Châteaudun times 1.2 for roads. Each legume offer is paired with a second buyer for the other crops in the rotation (paid at the synthetic hackathon market price plus or minus a few percent). Contract length is an assumption: spot 1 year, forward 2 to 3, cooperative 3.",
   "offers": [
     {
       "id": "o1",
@@ -16,7 +16,26 @@
       ],
       "contract": "Forward",
       "delivery": "Jul to Dec",
-      "distanceKm": 32
+      "distanceKm": 110,
+      "town": "Tours",
+      "lat": 47.3941,
+      "lon": 0.6848,
+      "years": 3,
+      "partner": {
+        "buyer": "Buyer K",
+        "type": "Cooperative",
+        "town": "Blois",
+        "lat": 47.5861,
+        "lon": 1.3359,
+        "distanceKm": 65,
+        "crops": [
+          "wheat",
+          "rapeseed"
+        ],
+        "contract": "Forward",
+        "years": 3,
+        "premiumPct": 2
+      }
     },
     {
       "id": "o2",
@@ -33,7 +52,26 @@
       ],
       "contract": "Spot",
       "delivery": "Jul to Sep",
-      "distanceKm": 45
+      "distanceKm": 100,
+      "town": "Le Mans",
+      "lat": 48.0061,
+      "lon": 0.1996,
+      "years": 1,
+      "partner": {
+        "buyer": "Buyer L",
+        "type": "Feed company",
+        "town": "Vendôme",
+        "lat": 47.7926,
+        "lon": 1.0675,
+        "distanceKm": 45,
+        "crops": [
+          "wheat",
+          "sunflower"
+        ],
+        "contract": "Spot",
+        "years": 1,
+        "premiumPct": -1
+      }
     },
     {
       "id": "o3",
@@ -50,7 +88,26 @@
       ],
       "contract": "Cooperative",
       "delivery": "Aug to Nov",
-      "distanceKm": 18
+      "distanceKm": 50,
+      "town": "Chartres",
+      "lat": 48.4469,
+      "lon": 1.4891,
+      "years": 3,
+      "partner": {
+        "buyer": "Buyer M",
+        "type": "Cooperative",
+        "town": "Chartres",
+        "lat": 48.4469,
+        "lon": 1.4891,
+        "distanceKm": 50,
+        "crops": [
+          "wheat",
+          "rapeseed"
+        ],
+        "contract": "Cooperative",
+        "years": 3,
+        "premiumPct": 1
+      }
     },
     {
       "id": "o4",
@@ -67,7 +124,26 @@
       ],
       "contract": "Forward",
       "delivery": "Aug to Jun",
-      "distanceKm": 58
+      "distanceKm": 185,
+      "town": "Rouen",
+      "lat": 49.4432,
+      "lon": 1.0993,
+      "years": 2,
+      "partner": {
+        "buyer": "Buyer N",
+        "type": "Food processor",
+        "town": "Dreux",
+        "lat": 48.7359,
+        "lon": 1.3665,
+        "distanceKm": 90,
+        "crops": [
+          "wheat",
+          "rapeseed"
+        ],
+        "contract": "Forward",
+        "years": 2,
+        "premiumPct": 3
+      }
     },
     {
       "id": "o5",
@@ -84,7 +160,26 @@
       ],
       "contract": "Spot",
       "delivery": "Jul to Aug",
-      "distanceKm": 26
+      "distanceKm": 55,
+      "town": "Orléans",
+      "lat": 47.9029,
+      "lon": 1.9093,
+      "years": 1,
+      "partner": {
+        "buyer": "Buyer O",
+        "type": "Trader",
+        "town": "Pithiviers",
+        "lat": 48.1713,
+        "lon": 2.2522,
+        "distanceKm": 85,
+        "crops": [
+          "wheat",
+          "sunflower"
+        ],
+        "contract": "Spot",
+        "years": 1,
+        "premiumPct": -2
+      }
     },
     {
       "id": "o6",
@@ -101,7 +196,26 @@
       ],
       "contract": "Forward",
       "delivery": "Aug to Dec",
-      "distanceKm": 64
+      "distanceKm": 220,
+      "town": "Poitiers",
+      "lat": 46.5802,
+      "lon": 0.3404,
+      "years": 2,
+      "partner": {
+        "buyer": "Buyer P",
+        "type": "Trader",
+        "town": "Tours",
+        "lat": 47.3941,
+        "lon": 0.6848,
+        "distanceKm": 110,
+        "crops": [
+          "wheat",
+          "rapeseed"
+        ],
+        "contract": "Forward",
+        "years": 2,
+        "premiumPct": 1
+      }
     },
     {
       "id": "o7",
@@ -118,7 +232,26 @@
       ],
       "contract": "Cooperative",
       "delivery": "Aug to Oct",
-      "distanceKm": 22
+      "distanceKm": 165,
+      "town": "Bourges",
+      "lat": 47.081,
+      "lon": 2.3988,
+      "years": 3,
+      "partner": {
+        "buyer": "Buyer Q",
+        "type": "Cooperative",
+        "town": "Bourges",
+        "lat": 47.081,
+        "lon": 2.3988,
+        "distanceKm": 165,
+        "crops": [
+          "wheat",
+          "sunflower"
+        ],
+        "contract": "Cooperative",
+        "years": 3,
+        "premiumPct": 2
+      }
     },
     {
       "id": "o8",
@@ -135,7 +268,26 @@
       ],
       "contract": "Forward",
       "delivery": "Aug to Jun",
-      "distanceKm": 72
+      "distanceKm": 270,
+      "town": "Rennes",
+      "lat": 48.1173,
+      "lon": -1.6778,
+      "years": 3,
+      "partner": {
+        "buyer": "Buyer R",
+        "type": "Feed company",
+        "town": "Le Mans",
+        "lat": 48.0061,
+        "lon": 0.1996,
+        "distanceKm": 100,
+        "crops": [
+          "wheat",
+          "rapeseed"
+        ],
+        "contract": "Forward",
+        "years": 3,
+        "premiumPct": 0
+      }
     },
     {
       "id": "o9",
@@ -152,7 +304,26 @@
       ],
       "contract": "Spot",
       "delivery": "Aug to Oct",
-      "distanceKm": 50
+      "distanceKm": 285,
+      "town": "Reims",
+      "lat": 49.2583,
+      "lon": 4.0317,
+      "years": 1,
+      "partner": {
+        "buyer": "Buyer S",
+        "type": "Food processor",
+        "town": "Orléans",
+        "lat": 47.9029,
+        "lon": 1.9093,
+        "distanceKm": 55,
+        "crops": [
+          "wheat",
+          "rapeseed"
+        ],
+        "contract": "Spot",
+        "years": 1,
+        "premiumPct": -1
+      }
     },
     {
       "id": "o10",
@@ -169,7 +340,31 @@
       ],
       "contract": "Spot",
       "delivery": "Jul to Sep",
-      "distanceKm": 80
+      "distanceKm": 190,
+      "town": "Angers",
+      "lat": 47.4784,
+      "lon": -0.5632,
+      "years": 2,
+      "partner": {
+        "buyer": "Buyer T",
+        "type": "Trader",
+        "town": "Tours",
+        "lat": 47.3941,
+        "lon": 0.6848,
+        "distanceKm": 110,
+        "crops": [
+          "wheat",
+          "sunflower"
+        ],
+        "contract": "Forward",
+        "years": 2,
+        "premiumPct": 1
+      }
     }
-  ]
+  ],
+  "farm": {
+    "town": "Châteaudun",
+    "lat": 48.0707,
+    "lon": 1.3377
+  }
 }

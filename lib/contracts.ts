@@ -95,7 +95,28 @@ export type Offer = {
   priceEurT: [number, number];
   contract: "Spot" | "Forward" | "Cooperative" | "Framework" | "Fixed or formula";
   delivery: string;
+  /** Road distance from the demo farm, km. */
   distanceKm: number;
+  town: string;
+  lat: number;
+  lon: number;
+  /** Contract length in years (1 to 3). */
+  years: number;
+  /** Second buyer for the other crops in the rotation, so the whole cycle is covered. */
+  partner: RotationBuyer;
+};
+export type RotationBuyer = {
+  buyer: string;
+  type: Offer["type"];
+  town: string;
+  lat: number;
+  lon: number;
+  distanceKm: number;
+  crops: CropId[];
+  /** Paid at the market price plus or minus this percentage. */
+  premiumPct: number;
+  contract: Offer["contract"];
+  years: number;
 };
 export type OpportunitiesData = { offers: Offer[] };
 

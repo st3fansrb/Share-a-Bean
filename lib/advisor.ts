@@ -1,6 +1,6 @@
 // Rule-based offer ranking for the demo farm. Pure arithmetic on the same
 // placeholder numbers the calculator uses; the AI layer only words the result.
-import { marginPerHa, average } from "@/lib/calc";
+import { marginPerHa, average, rotationMargins } from "@/lib/calc";
 import type { Offer } from "@/lib/contracts";
 
 export type AdvisorCrop = { label: string; legume: boolean; yieldTHa: number; priceEurT: number; costEurHa: number };
@@ -22,6 +22,11 @@ export type RankedOffer = {
   marginEurHa: number;
   /** Gain per ha against what the farm's current crops earn on average. */
   gainEurHa: number;
+  /** Legume buyer plus the second buyer, averaged over a 3-year rotation. */
+  packageEurHa: number;
+  packageGainEurHa: number;
+  /** Years of the 3-year rotation both contracts cover. */
+  coveredYears: number;
   reasons: string[];
   cautions: string[];
 };
@@ -61,18 +66,30 @@ export function rankOffers(inp: AdvisorInput): RankedOffer[] {
       const net = mid - HAUL_EUR_T_KM * o.distanceKm;
       const margin = marginPerHa({ ...c, priceEurT: net, supportEurHa: inp.capEurHa }) + inp.nitrogenEurHa;
       const gain = margin - now;
+      // 3-year rotation: the legume for this buyer, then the partner's two crops (first one gets the nitrogen credit).
+      const p = o.partner;
+      const rot = [
+        { crop: o.crop, legume: true, input: { ...c, priceEurT: net, supportEurHa: inp.capEurHa } },
+        ...p.crops.slice(0, 2).map((k) => {
+          const pc = inp.crops[k];
+          const price = pc.priceEurT * (1 + p.premiumPct / 100) - HAUL_EUR_T_KM * p.distanceKm;
+          return { crop: k, legume: false, input: { ...pc, priceEurT: price, supportEurHa: 0 } };
+        }),
+      ];
+      const packageEurHa = average(rotationMargins(rot, inp.nitrogenEurHa).map((m) => m.margin));
+      const coveredYears = Math.min(3, o.years, p.years);
       const tonnes = Math.round(legumeHa * c.yieldTHa);
       const reasons = [
         `${c.label} at about ${Math.round(net)} €/t after transport earns roughly ${Math.round(margin)} €/ha, with CAP support and the nitrogen left for the next crop.`,
-        `${o.distanceKm} km away; ${contractNote[o.contract]}.`,
+        `${o.town}, ${o.distanceKm} km away; ${o.years}-year contract, ${contractNote[o.contract]}.`,
       ];
       const cautions: string[] = [];
       if (tonnes < o.volumeT[0]) {
         cautions.push(`Your ${legumeHa} ha would give about ${tonnes} t; this buyer wants ${o.volumeT[0]} t or more, so pool with neighbours or a cooperative.`);
       }
       if (o.contract === "Spot") cautions.push("Spot means no price guarantee before harvest.");
-      return { offer: o, netPriceEurT: net, marginEurHa: margin, gainEurHa: gain, reasons, cautions };
+      return { offer: o, netPriceEurT: net, marginEurHa: margin, gainEurHa: gain, packageEurHa, packageGainEurHa: packageEurHa - now, coveredYears, reasons, cautions };
     })
-    .sort((a, b) => b.gainEurHa - a.gainEurHa);
+    .sort((a, b) => b.coveredYears - a.coveredYears || b.packageGainEurHa - a.packageGainEurHa);
   return scored.map((s, i) => ({ ...s, rank: i + 1 }));
 }
