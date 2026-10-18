@@ -149,3 +149,6 @@ th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: v
   .main { padding: 22px 16px 48px; }
   h1 { font-size: 32px; }
 }
+
+.zoom-ctl button { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); font-size: 18px; line-height: 1; cursor: pointer; }
+.zoom-ctl button:hover { background: var(--forest-soft); }
