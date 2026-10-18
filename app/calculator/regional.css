@@ -1,7 +1,12 @@
 /* Regional calculator, restyled onto the field-ledger system. */
 .rc { display: flex; flex-direction: column; gap: 16px; }
-.rc-controls { display: grid; grid-template-columns: minmax(180px, 0.7fr) 1.6fr 1.1fr; gap: 20px; align-items: start; padding: 16px 20px; }
-.rc-controls label { margin-bottom: 6px; }
+.rc-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; padding: 10px 14px; }
+.rc-controls > div { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.rc-controls label { margin: 0; font-size: 11px; white-space: nowrap; }
+.rc-controls select { width: auto; padding: 5px 10px; min-height: 0; }
+.rc-controls .seg button { padding: 4px 10px; font-size: 12.5px; }
+.rc-wide { display: grid; gap: 16px; }
+.rc-wide .rc-part { grid-template-columns: minmax(180px, 320px) minmax(0, 1fr) 90px; }
 .seg { display: flex; flex-wrap: wrap; gap: 4px; }
 .seg button {
   font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 999px; cursor: pointer;

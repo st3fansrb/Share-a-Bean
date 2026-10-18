@@ -19,6 +19,7 @@ export default function OpportunitiesList({ packages }: { packages: Record<strin
   const [contractFilter, setContractFilter] = useState("all");
   const [maxDistance, setMaxDistance] = useState(300);
   const [open, setOpen] = useState<string | null>(null);
+  const [showAll, setShowAll] = useState(false);
 
   const filteredOffers = useMemo(
     () =>
@@ -27,6 +28,12 @@ export default function OpportunitiesList({ packages }: { packages: Record<strin
       ),
     [cropFilter, contractFilter, maxDistance],
   );
+
+  // First few buyers by default; a marker tap on a hidden one opens the full list.
+  const FIRST = 4;
+  const openIdx = filteredOffers.findIndex((o) => o.id === open);
+  const expanded = showAll || openIdx >= FIRST;
+  const shown = expanded ? filteredOffers : filteredOffers.slice(0, FIRST);
 
   // Tapping a marker opens its row and brings it into view.
   const select = (id: string | null) => {
@@ -69,7 +76,7 @@ export default function OpportunitiesList({ packages }: { packages: Record<strin
 
         <div className="buyers-list">
           {filteredOffers.length === 0 && <p className="muted" style={{ padding: 16 }}>No buyer matches. Widen a filter.</p>}
-          {filteredOffers.map((o) => {
+          {shown.map((o) => {
             const avgPrice = Math.round((o.priceEurT[0] + o.priceEurT[1]) / 2);
             const pkg = packages[o.id];
             const p = o.partner;
@@ -114,6 +121,11 @@ export default function OpportunitiesList({ packages }: { packages: Record<strin
               </div>
             );
           })}
+          {filteredOffers.length > FIRST && (
+            <button type="button" className="btn ghost buyers-more" onClick={() => { if (expanded) { setShowAll(false); setOpen(null); } else setShowAll(true); }}>
+              {expanded ? "Show fewer" : `Show all ${filteredOffers.length} buyers`}
+            </button>
+          )}
         </div>
       </section>
     </div>

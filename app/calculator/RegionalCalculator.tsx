@@ -234,38 +234,40 @@ export default function RegionalCalculator({ prefill }: { prefill?: Prefill }) {
               </div>
             </section>
           )}
-
-          <section className="card rc-sec">
-            <p className="eyebrow">Where the gain comes from</p>
-            {res.parts.map(([lbl, v]) => (
-              <div key={lbl} className="rc-part">
-                <span>{lbl}</span>
-                <span className="track"><i className="axis" /><i className={v >= 0 ? "up" : "down"} style={{ width: `${(Math.abs(v) / maxPart) * 50}%` }} /></span>
-                <span className="num v">{sgn(v)}</span>
-              </div>
-            ))}
-            <div className="rc-total"><span>Total gain</span><span className={`num ${win ? "pos" : "neg"}`}>{sgn(res.adv)}/ha</span></div>
-          </section>
-
-          <details className="card rc-sec">
-            <summary><span className="eyebrow">Year by year</span></summary>
-            <table>
-              <thead><tr><th>Sequence</th><th className="r">Year 1</th><th className="r">Year 2</th><th className="r">Year 3</th><th className="r">Total</th></tr></thead>
-              <tbody>
-                {([[`${L.label} → wheat → wheat`, res.lg, win], [`${C.label} → wheat → wheat`, res.cg, !win]] as const).map(([lbl, a, strong]) => (
-                  <tr key={lbl} className={strong ? "strong" : ""}>
-                    <td>{lbl}</td>{a.map((x, i) => <td key={i} className="r num">{eur(x)}</td>)}<td className="r num">{eur(a[0] + a[1] + a[2])}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <div className="rc-trio">
-              <div><small>Wheat yield after {L.label.toLowerCase()}</small><b className="num">{fmt(res.l2.y, 2)} t</b><small className="num">vs {fmt(res.c2.y, 2)} t after {C.label.toLowerCase()}</small></div>
-              <div><small>Fertiliser N in year 2</small><b className="num">{fmt(res.l2.n)} kg</b><small className="num">vs {fmt(res.c2.n)} kg · {fmt(res.c2.n - res.l2.n)} kg saved</small></div>
-              <div><small>N price</small><b className="num">€{fmt(res.pn, 2)}/kg</b><small>{nP(st, rid).src}</small></div>
-            </div>
-          </details>
         </div>
+      </div>
+
+      <div className="rc-wide">
+        <section className="card rc-sec">
+          <p className="eyebrow">Where the gain comes from</p>
+          {res.parts.map(([lbl, v]) => (
+            <div key={lbl} className="rc-part">
+              <span>{lbl}</span>
+              <span className="track"><i className="axis" /><i className={v >= 0 ? "up" : "down"} style={{ width: `${(Math.abs(v) / maxPart) * 50}%` }} /></span>
+              <span className="num v">{sgn(v)}</span>
+            </div>
+          ))}
+          <div className="rc-total"><span>Total gain</span><span className={`num ${win ? "pos" : "neg"}`}>{sgn(res.adv)}/ha</span></div>
+        </section>
+
+        <details className="card rc-sec">
+          <summary><span className="eyebrow">Year by year</span></summary>
+          <table>
+            <thead><tr><th>Sequence</th><th className="r">Year 1</th><th className="r">Year 2</th><th className="r">Year 3</th><th className="r">Total</th></tr></thead>
+            <tbody>
+              {([[`${L.label} → wheat → wheat`, res.lg, win], [`${C.label} → wheat → wheat`, res.cg, !win]] as const).map(([lbl, a, strong]) => (
+                <tr key={lbl} className={strong ? "strong" : ""}>
+                  <td>{lbl}</td>{a.map((x, i) => <td key={i} className="r num">{eur(x)}</td>)}<td className="r num">{eur(a[0] + a[1] + a[2])}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="rc-trio">
+            <div><small>Wheat yield after {L.label.toLowerCase()}</small><b className="num">{fmt(res.l2.y, 2)} t</b><small className="num">vs {fmt(res.c2.y, 2)} t after {C.label.toLowerCase()}</small></div>
+            <div><small>Fertiliser N in year 2</small><b className="num">{fmt(res.l2.n)} kg</b><small className="num">vs {fmt(res.c2.n)} kg · {fmt(res.c2.n - res.l2.n)} kg saved</small></div>
+            <div><small>N price</small><b className="num">€{fmt(res.pn, 2)}/kg</b><small>{nP(st, rid).src}</small></div>
+          </div>
+        </details>
       </div>
     </div>
   );
